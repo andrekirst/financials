@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.02">
+    <BkToCstmrStmt>
+        <GrpHdr>
+            <MsgId>12965877750</MsgId>
+            <CreDtTm>2024-06-05T10:26:30.430Z</CreDtTm>
+            <MsgRcpt>
+                <Nm>Test Client ABC</Nm>
+                <Id>
+                    <OrgId>
+                        <Othr>
+                            <Id>sepat1</Id>
+                        </Othr>
+                    </OrgId>
+                </Id>
+            </MsgRcpt>
+        </GrpHdr>
+        <Stmt>
+            <Id>10527464700</Id>
+            <ElctrncSeqNb>1</ElctrncSeqNb>
+            <LglSeqNb>1</LglSeqNb>
+            <CreDtTm>2024-06-05T10:26:30.462Z</CreDtTm>
+            <FrToDt>
+                <FrDtTm>2024-06-04T00:00:00.000Z</FrDtTm>
+                <ToDtTm>2024-06-04T23:59:59.000Z</ToDtTm>
+            </FrToDt>
+            <Acct>
+                <Id>
+                    <Othr>
+                        <Id>3000000651</Id>
+                    </Othr>
+                </Id>
+                <Tp>
+                    <Prtry>IBDA_DDA</Prtry>
+                </Tp>
+                <Ccy>EUR</Ccy>
+                <Nm>Test Client ABC EUR Account1</Nm>
+                <Svcr>
+                    <FinInstnId>
+                        <BIC>ZYTADEF0</BIC>
+                        <Nm>Goldman Sachs Bank</Nm>
+                    </FinInstnId>
+                </Svcr>
+            </Acct>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>OPBD</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="EUR">12504124.50</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2024-06-03T23:59:00.000Z</DtTm>
+                </Dt>
+            </Bal>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>CLBD</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="EUR">12480124.50</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2024-06-04T23:59:00.000Z</DtTm>
+                </Dt>
+            </Bal>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>OPAV</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="EUR">12504124.50</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2024-06-03T23:59:00.000Z</DtTm>
+                </Dt>
+            </Bal>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>CLAV</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="EUR">12480124.50</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2024-06-04T23:59:00.000Z</DtTm>
+                </Dt>
+            </Bal>
+            <TxsSummry>
+                <TtlNtries>
+                    <NbOfNtries>4</NbOfNtries>
+                    <Sum>51198.0800</Sum>
+                    <TtlNetNtryAmt>24000.00</TtlNetNtryAmt>
+                    <CdtDbtInd>DBIT</CdtDbtInd>
+                </TtlNtries>
+                <TtlCdtNtries>
+                    <NbOfNtries>2</NbOfNtries>
+                    <Sum>13000.00</Sum>
+                </TtlCdtNtries>
+                <TtlDbtNtries>
+                    <NbOfNtries>2</NbOfNtries>
+                    <Sum>37000.00</Sum>
+                </TtlDbtNtries>
+            </TxsSummry>
+            <Ntry>
+                <NtryRef>213326500</NtryRef>
+                <Amt Ccy="EUR">5000.00</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <RvslInd>false</RvslInd>
+                <Sts>BOOK</Sts>
+                <BookgDt>
+                    <DtTm>2024-06-04T11:19:20.000Z</DtTm>
+                </BookgDt>
+                <ValDt>
+                    <Dt>2024-06-04</Dt>
+                </ValDt>
+                <BkTxCd>
+                    <Domn>
+                        <Cd>PMNT</Cd>
+                        <Fmly>
+                            <Cd>ICDT</Cd>
+                            <SubFmlyCd>ARET</SubFmlyCd>
+                        </Fmly>
+                    </Domn>
+                    <Prtry>
+                        <Cd>SEPA CT Reject</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <NtryDtls>
+                    <TxDtls>
+                        <Refs>
+                            <MsgId>3100611</MsgId>
+                            <AcctSvcrRef>SB2415600002733</AcctSvcrRef>
+                            <PmtInfId>SPB2415693341153</PmtInfId>
+                            <EndToEndId>GS1XMZ0Q6N</EndToEndId>
+                            <TxId>SB2415600002733</TxId>
+                        </Refs>
+                        <AmtDtls>
+                            <InstdAmt>
+                                <Amt Ccy="EUR">104.00</Amt>
+                            </InstdAmt>
+                            <TxAmt>
+                                <Amt Ccy="EUR">104.00</Amt>
+                            </TxAmt>
+                        </AmtDtls>
+                        <RltdPties>
+                            <Dbtr>
+                                <Nm>Test Client ABC</Nm>
+                            </Dbtr>
+                            <DbtrAcct>
+                                <Id>
+                                    <IBAN>DE20514304103000000651</IBAN>
+                                </Id>
+                                <Nm>Test Client ABC</Nm>
+                            </DbtrAcct>
+                        </RltdPties>
+                        <RltdAgts>
+                            <DbtrAgt>
+                                <FinInstnId>
+                                    <BIC>ZYTADEF0</BIC>
+                                </FinInstnId>
+                            </DbtrAgt>
+                        </RltdAgts>
+                        <RmtInf>
+                            <Ustrd>NKVPO MESAOYKTJK QNMI XGX3648 </Ustrd>
+                        </RmtInf>
+                        <AddtlTxInf>Desc: Client Ref ID: SCT-230513-999, GS ID: SPB2415693341153</AddtlTxInf>
+                    </TxDtls>
+                </NtryDtls>
+            </Ntry>
+            <Ntry>
+                <NtryRef>213328650</NtryRef>
+                <Amt Ccy="EUR">8000.00</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <RvslInd>false</RvslInd>
+                <Sts>BOOK</Sts>
+                <BookgDt>
+                    <DtTm>2024-06-04T11:19:19.000Z</DtTm>
+                </BookgDt>
+                <ValDt>
+                    <Dt>2024-06-04</Dt>
+                </ValDt>
+                <BkTxCd>
+                    <Domn>
+                        <Cd>PMNT</Cd>
+                        <Fmly>
+                            <Cd>ICDT</Cd>
+                            <SubFmlyCd>ARET</SubFmlyCd>
+                        </Fmly>
+                    </Domn>
+                    <Prtry>
+                        <Cd>SEPA CT Reject</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <NtryDtls>
+                    <TxDtls>
+                        <Refs>
+                            <MsgId>3100579</MsgId>
+                            <AcctSvcrRef>SB2415600002769</AcctSvcrRef>
+                            <PmtInfId>SPB2415693341194</PmtInfId>
+                            <EndToEndId>GSWVNWPJ0V7XH6AT</EndToEndId>
+                            <TxId>SB2415600002769</TxId>
+                        </Refs>
+                        <AmtDtls>
+                            <InstdAmt>
+                                <Amt Ccy="EUR">105.00</Amt>
+                            </InstdAmt>
+                            <TxAmt>
+                                <Amt Ccy="EUR">105.00</Amt>
+                            </TxAmt>
+                        </AmtDtls>
+                        <RltdPties>
+                            <Dbtr>
+                                <Nm>Test Client ABC</Nm>
+                            </Dbtr>
+                            <DbtrAcct>
+                                <Id>
+                                    <IBAN>DE20514304103000000651</IBAN>
+                                </Id>
+                                <Nm>Test Client ABC</Nm>
+                            </DbtrAcct>
+                        </RltdPties>
+                        <RltdAgts>
+                            <DbtrAgt>
+                                <FinInstnId>
+                                    <BIC>ZYTADEF0</BIC>
+                                </FinInstnId>
+                            </DbtrAgt>
+                        </RltdAgts>
+                        <RmtInf>
+                            <Ustrd>Payment favoring EUR account</Ustrd>
+                        </RmtInf>
+                        <AddtlTxInf>Desc: Client Ref ID: pmtinf-001, GS ID: SPB2415693341194</AddtlTxInf>
+                    </TxDtls>
+                </NtryDtls>
+            </Ntry>
+            <Ntry>
+                <NtryRef>213337750</NtryRef>
+                <Amt Ccy="EUR">17000.00</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <RvslInd>false</RvslInd>
+                <Sts>BOOK</Sts>
+                <BookgDt>
+                    <DtTm>2024-06-04T10:45:02.000Z</DtTm>
+                </BookgDt>
+                <ValDt>
+                    <Dt>2024-06-04</Dt>
+                </ValDt>
+                <BkTxCd>
+                    <Domn>
+                        <Cd>PMNT</Cd>
+                        <Fmly>
+                            <Cd>ICDT</Cd>
+                            <SubFmlyCd>ACDT</SubFmlyCd>
+                        </Fmly>
+                    </Domn>
+                    <Prtry>
+                        <Cd>SEPA CT Payment</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <NtryDtls>
+                    <TxDtls>
+                        <Refs>
+                            <MsgId>3100656</MsgId>
+                            <AcctSvcrRef>SB2415600002711</AcctSvcrRef>
+                            <PmtInfId>SPB2415693341180</PmtInfId>
+                            <EndToEndId>GS3EK6DPXP</EndToEndId>
+                            <TxId>SB2415600002711</TxId>
+                        </Refs>
+                        <AmtDtls>
+                            <InstdAmt>
+                                <Amt Ccy="EUR">104.00</Amt>
+                            </InstdAmt>
+                            <TxAmt>
+                                <Amt Ccy="EUR">104.00</Amt>
+                            </TxAmt>
+                        </AmtDtls>
+                        <RltdPties>
+                            <Cdtr>
+                                <Nm>BGYYBBW MVIYLT</Nm>
+                            </Cdtr>
+                            <CdtrAcct>
+                                <Id>
+                                    <Othr>
+                                        <Id>5000003347</Id>
+                                    </Othr>
+                                </Id>
+                            </CdtrAcct>
+                        </RltdPties>
+                        <RltdAgts>
+                            <CdtrAgt>
+                                <FinInstnId>
+                                    <BIC>ZYTADEF0</BIC>
+                                </FinInstnId>
+                            </CdtrAgt>
+                        </RltdAgts>
+                        <RmtInf>
+                            <Ustrd>NKVPO MESAOYKTJK QNMI ABC9999 </Ustrd>
+                        </RmtInf>
+                        <AddtlTxInf>Desc: Client Ref ID: SCT-230513-999, GS ID: SPB2415693341180</AddtlTxInf>
+                    </TxDtls>
+                </NtryDtls>
+            </Ntry>
+            <Ntry>
+                <NtryRef>213337800</NtryRef>
+                <Amt Ccy="EUR">20000.00</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <RvslInd>false</RvslInd>
+                <Sts>BOOK</Sts>
+                <BookgDt>
+                    <DtTm>2024-06-04T10:45:02.000Z</DtTm>
+                </BookgDt>
+                <ValDt>
+                    <Dt>2024-06-04</Dt>
+                </ValDt>
+                <BkTxCd>
+                    <Domn>
+                        <Cd>PMNT</Cd>
+                        <Fmly>
+                            <Cd>ICDT</Cd>
+                            <SubFmlyCd>ACDT</SubFmlyCd>
+                        </Fmly>
+                    </Domn>
+                    <Prtry>
+                        <Cd>SEPA CT Payment</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <NtryDtls>
+                    <TxDtls>
+                        <Refs>
+                            <MsgId>3100656</MsgId>
+                            <AcctSvcrRef>SB2415600002710</AcctSvcrRef>
+                            <PmtInfId>SPB2415693341180</PmtInfId>
+                            <EndToEndId>GSM9IUT9W3</EndToEndId>
+                            <TxId>SB2415600002710</TxId>
+                        </Refs>
+                        <AmtDtls>
+                            <InstdAmt>
+                                <Amt Ccy="EUR">103.00</Amt>
+                            </InstdAmt>
+                            <TxAmt>
+                                <Amt Ccy="EUR">103.00</Amt>
+                            </TxAmt>
+                        </AmtDtls>
+                        <RltdPties>
+                            <Cdtr>
+                                <Nm>BGYYBBW MVIYLT</Nm>
+                            </Cdtr>
+                            <CdtrAcct>
+                                <Id>
+                                    <Othr>
+                                        <Id>5000003347</Id>
+                                    </Othr>
+                                </Id>
+                            </CdtrAcct>
+                        </RltdPties>
+                        <RltdAgts>
+                            <CdtrAgt>
+                                <FinInstnId>
+                                    <BIC>ZYTADEF0</BIC>
+                                </FinInstnId>
+                            </CdtrAgt>
+                        </RltdAgts>
+                        <RmtInf>
+                            <Ustrd>NKVPO MESAOYKTJK QNMI ABC9999 </Ustrd>
+                        </RmtInf>
+                        <AddtlTxInf>Desc: Client Ref ID: SCT-230513-999, GS ID: SPB2415693341180</AddtlTxInf>
+                    </TxDtls>
+                </NtryDtls>
+            </Ntry>
+        </Stmt>
+    </BkToCstmrStmt>
+</Document>

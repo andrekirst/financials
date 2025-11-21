@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.054.001.02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.054.001.02 camt.054.001.02.xsd">
+
+<BkToCstmrDbtCdtNtfctn>
+  <GrpHdr>
+    <MsgId>054D2013-12-31T01:59:36.0N130000007</MsgId>
+    <CreDtTm>2013-12-31T01:59:40.0+01:00</CreDtTm>
+    <MsgPgntn>
+      <PgNb>1</PgNb>
+      <LastPgInd>true</LastPgInd>
+    </MsgPgntn>
+  </GrpHdr>
+  <Ntfctn>
+    <Id>0352C5420131231015954</Id>
+    <ElctrncSeqNb>130000007</ElctrncSeqNb>
+    <CreDtTm>2013-12-31T01:59:40.0+01:00</CreDtTm>
+    <Acct>
+      <Id>
+        <IBAN>DE58740618130100033626</IBAN>
+      </Id>
+      <Ccy>EUR</Ccy>
+      <Ownr>
+        <Nm>Testkonto Nummer 2</Nm>
+      </Ownr>
+      <Svcr>
+        <FinInstnId>
+          <BIC>GENODEF1PFK</BIC>
+          <Nm>VR-Bank Rottal-Inn eG</Nm>
+          <Othr>
+            <Id>DE 129267947</Id>
+            <Issr>UmsStId</Issr>
+          </Othr>
+        </FinInstnId>
+      </Svcr>
+    </Acct>
+    <Ntry>
+      <Amt Ccy="EUR">1.10</Amt>
+      <CdtDbtInd>DBIT</CdtDbtInd>
+      <Sts>BOOK</Sts>
+      <BookgDt>
+        <Dt>2013-12-30</Dt>
+      </BookgDt>
+      <ValDt>
+        <Dt>2013-12-30</Dt>
+      </ValDt>
+      <AcctSvcrRef>2013122812211780000</AcctSvcrRef>
+      <BkTxCd/>
+      <NtryDtls>
+        <TxDtls>
+          <Refs>
+            <MsgId>STZV-Msg28122013-11:29</MsgId>
+            <EndToEndId>STZV-EtE28122013-11:29-1</EndToEndId>
+          </Refs>
+          <AmtDtls>
+            <TxAmt>
+              <Amt Ccy="EUR">0.60</Amt>
+            </TxAmt>
+          </AmtDtls>
+          <BkTxCd>
+            <Prtry>
+              <Cd>NMSC+201</Cd>
+              <Issr>ZKA</Issr>
+            </Prtry>
+          </BkTxCd>
+          <RltdPties>
+            <Dbtr>
+              <Nm>Testkonto Nummer 2</Nm>
+            </Dbtr>
+            <DbtrAcct>
+              <Id>
+                <IBAN>DE14740618130000033626</IBAN>
+              </Id>
+            </DbtrAcct>
+            <UltmtDbtr>
+              <Nm>keine Information vorhanden</Nm>
+            </UltmtDbtr>
+            <Cdtr>
+              <Nm>Testkonto Nummer 1</Nm>
+            </Cdtr>
+            <CdtrAcct>
+              <Id>
+                <IBAN>DE58740618130100033626</IBAN>
+              </Id>
+            </CdtrAcct>
+            <UltmtCdtr>
+              <Nm>Testkonto 1</Nm>
+            </UltmtCdtr>
+          </RltdPties>
+          <RmtInf>
+            <Ustrd>Sammler aus Testknto 2 Zweite Ueberweisung   TAN:704515   </Ustrd>
+          </RmtInf>
+        </TxDtls>
+        <TxDtls>
+          <Refs>
+            <MsgId>STZV-Msg28122013-11:29</MsgId>
+            <EndToEndId>STZV-EtE28122013-11:29-2</EndToEndId>
+          </Refs>
+          <AmtDtls>
+            <TxAmt>
+              <Amt Ccy="EUR">0.50</Amt>
+            </TxAmt>
+          </AmtDtls>
+          <BkTxCd>
+            <Prtry>
+              <Cd>NMSC+201</Cd>
+              <Issr>ZKA</Issr>
+            </Prtry>
+          </BkTxCd>
+          <RltdPties>
+            <Dbtr>
+              <Nm>Testkonto Nummer 2</Nm>
+            </Dbtr>
+            <DbtrAcct>
+              <Id>
+                <IBAN>DE14740618130000033626</IBAN>
+              </Id>
+            </DbtrAcct>
+            <UltmtDbtr>
+              <Nm>keine Information vorhanden</Nm>
+            </UltmtDbtr>
+            <Cdtr>
+              <Nm>Testkonto Nummer 1</Nm>
+            </Cdtr>
+            <CdtrAcct>
+              <Id>
+                <IBAN>DE58740618130100033626</IBAN>
+              </Id>
+            </CdtrAcct>
+            <UltmtCdtr>
+              <Nm>Testkonto 1</Nm>
+            </UltmtCdtr>
+          </RltdPties>
+          <RmtInf>
+            <Ustrd>Sammler aus Testkonto 2 Erste Ueberweisung   TAN:704515   </Ustrd>
+          </RmtInf>
+        </TxDtls>
+      </NtryDtls>
+    </Ntry>
+  </Ntfctn>
+</BkToCstmrDbtCdtNtfctn>
+</Document>

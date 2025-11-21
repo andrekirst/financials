@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.08">
+    <BkToCstmrAcctRpt>
+        <GrpHdr>
+            <MsgId>15875741400</MsgId>
+            <CreDtTm>2025-05-06T14:51:39.728Z</CreDtTm>
+            <AddtlInf>INTR</AddtlInf>
+        </GrpHdr>
+        <Rpt>
+            <Id>11871053550</Id>
+            <ElctrncSeqNb>980</ElctrncSeqNb>
+            <LglSeqNb>980</LglSeqNb>
+            <CreDtTm>2025-05-06T14:51:39.731Z</CreDtTm>
+            <FrToDt>
+                <FrDtTm>2025-04-29T11:30:00.000Z</FrDtTm>
+                <ToDtTm>2025-04-29T12:30:00.000Z</ToDtTm>
+            </FrToDt>
+            <Acct>
+                <Id>
+                    <Othr>
+                        <Id>103116583</Id>
+                    </Othr>
+                </Id>
+                <Tp>
+                    <Prtry>IBDA_DDA</Prtry>
+                </Tp>
+                <Ccy>USD</Ccy>
+                <Nm>Receiver</Nm>
+                <Svcr>
+                    <FinInstnId>
+                        <BICFI>GSCRUS30</BICFI>
+                        <Nm>Goldman Sachs Bank</Nm>
+                    </FinInstnId>
+                </Svcr>
+            </Acct>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>ITAV</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="USD">165766826571.94</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2025-04-29T23:59:00.000Z</DtTm>
+                </Dt>
+            </Bal>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>ITBD</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="USD">165766826571.94</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2025-04-29T23:59:00.000Z</DtTm>
+                </Dt>
+            </Bal>
+            <TxsSummry>
+                <TtlNtries>
+                    <NbOfNtries>1</NbOfNtries>
+                    <Sum>850.0</Sum>
+                    <TtlNetNtry>
+                        <Amt>850.0</Amt>
+                        <CdtDbtInd>CRDT</CdtDbtInd>
+                    </TtlNetNtry>
+                </TtlNtries>
+                <TtlCdtNtries>
+                    <NbOfNtries>1</NbOfNtries>
+                    <Sum>850.0</Sum>
+                </TtlCdtNtries>
+                <TtlDbtNtries>
+                    <NbOfNtries>0</NbOfNtries>
+                    <Sum>0</Sum>
+                </TtlDbtNtries>
+            </TxsSummry>
+            <Ntry>
+                <NtryRef>325421350</NtryRef>
+                <Amt Ccy="USD">850.00</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <RvslInd>false</RvslInd>
+                <Sts>
+                    <Cd>BOOK</Cd>
+                </Sts>
+                <BookgDt>
+                    <DtTm>2025-04-29T11:48:47.000Z</DtTm>
+                </BookgDt>
+                <ValDt>
+                    <Dt>2025-04-29</Dt>
+                </ValDt>
+                <BkTxCd>
+                    <Domn>
+                        <Cd>PMNT</Cd>
+                        <Fmly>
+                            <Cd>RCDT</Cd>
+                            <SubFmlyCd>DMCT</SubFmlyCd>
+                        </Fmly>
+                    </Domn>
+                    <Prtry>
+                        <Cd>Incoming Wire</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <NtryDtls>
+                    <TxDtls>
+                        <Refs>
+                            <MsgId>79250429GSTXBFWR039325</MsgId>
+                            <AcctSvcrRef>SI2511900000177</AcctSvcrRef>
+                            <EndToEndId>39307281YSXJEHQI202701</EndToEndId>
+                            <TxId>SI2511900000177</TxId>
+                            <ClrSysRef>39307281YSXJEHQI202701</ClrSysRef>
+                        </Refs>
+                        <AmtDtls>
+                            <InstdAmt>
+                                <Amt Ccy="USD">850.00</Amt> <!-- The Strd block provides more -->                                                         
+                                                              <!--  details about the payment -->
+                            </InstdAmt>
+                            <TxAmt>
+                                <Amt Ccy="USD">850.00</Amt>
+                            </TxAmt>
+                        </AmtDtls>
+                        <RltdPties>
+                            <Dbtr>
+                                <Pty>
+                                    <Nm>Corporation Z</Nm>
+                                </Pty>
+                            </Dbtr>
+                            <DbtrAcct>
+                                <Id>
+                                    <Othr>
+                                        <Id>FED123456</Id>
+                                    </Othr>
+                                </Id>
+                                <Nm>Corporation Z</Nm>
+                            </DbtrAcct>
+                        </RltdPties>
+                        <RltdAgts>
+                            <DbtrAgt>
+                                <FinInstnId>
+                                    <Othr>
+                                        <Id>021000089</Id>
+                                    </Othr>
+                                </FinInstnId>
+                            </DbtrAgt>
+                        </RltdAgts>
+                        <RmtInf>
+                            <Strd>              <!-- The content for Strd block are directly  -->
+                                                                  <!-- picked up from Pain001 -->
+                                <RfrdDocInf> 
+                                    <Tp>
+                                        <CdOrPrtry>
+                                            <Cd>CINV</Cd>     <!-- CINV implies the document  -->
+                                                            <!-- type is a Commercial Invoice -->
+                                        </CdOrPrtry> 
+                                    </Tp>
+                                    <Nb>INV/123456/2025/04/01</Nb>   <!-- Invoice number for  -->
+                                                                      <!-- payment being made -->
+                                                                         <!-- enables invoice -->
+                                                                    <!-- to payments matching -->
+                                    <RltdDt>2025-04-29</RltdDt>
+                                </RfrdDocInf>
+                                <RfrdDocAmt>
+                                    <DuePyblAmt Ccy="USD">1000.0</DuePyblAmt> 
+                                    <DscntApldAmt>
+                                        <Tp>
+                                            <Cd>APDS</Cd>  <!-- Code for Promotional Discount -->
+                                        </Tp>
+                                        <Amt Ccy="USD">50.0</Amt>
+                                    </DscntApldAmt>
+                                    <AdjstmntAmtAndRsn>
+                                        <Amt Ccy="USD">100.00</Amt>    <!-- Adjustment Amount -->
+                                        <CdtDbtInd>DBIT</CdtDbtInd>         <!-- Credit/Debit -->
+                                        <AddtlInf>Deduction for missing item </AddtlInf>                            
+                                    </AdjstmntAmtAndRsn>
+                                    <RmtdAmt Ccy="USD">850.0</RmtdAmt> <!-- Final Amount paid -->
+                                </RfrdDocAmt>
+                                <Invcr>                  <!--  Invoicer's details as provided -->
+                                                                     <!-- in the Payment file -->
+                                    <Nm>ABC Corp.</Nm> 
+                                    <PstlAdr>
+                                        <AdrType>
+                                            <Cd>ADDR</Cd>
+                                        <Dept>Finance</Dept>
+                                        <SubDept>Account Receivables</SubDept>
+                                        <StrtNm>MANNING ST</StrtNm>
+                                        <BldgNb>1616</BldgNb>
+                                        <BldgNm>Bldg Name</BldgNm>
+                                        <Flr>02</Flr>
+                                        <PstBx>1122</PstBx>
+                                        <Room>121</Room>
+                                        <PstCd>93309</PstCd>
+                                        <TwnNm>BAKERSFIELD</TwnNm>
+                                        <TwnLctnNm>Twn Lctn Nm</TwnLctnNm>
+                                        <DstrctNm>Dstrct Nm</DstrctNm>
+                                        <CtrySubDvsn>CA</CtrySubDvsn>
+                                        <Ctry>US</Ctry>
+                                        <AdrLine>Address Line</AdrLine>
+                                    </PstlAdr>
+                                    <Id>
+                                        <PrvtId>
+                                            <DtAndPlcOfBirth>
+                                                <BirthDt>1991-09-01</BirthDt>
+                                                <PrvcOfBirth>Province</PrvcOfBirth>
+                                                <CityOfBirth>NewYork</CityOfBirth>
+                                                <CtryOfBirth>US</CtryOfBirth>
+                                            </DtAndPlcOfBirth>
+                                        </PrvtId>
+                                    </Id>
+                                </Invcr>
+                                <Invcee>                  <!-- Invoicee's details as provided -->
+                                                                     <!-- in the Payment file -->
+                                    <Nm>XYZ Corp.</Nm>
+                                    <PstlAdr>
+                                        <Dept>Finance</Dept>
+                                        <SubDept>Account Payables</SubDept>
+                                        <StrtNm>Fun ST</StrtNm>
+                                        <BldgNb>2009</BldgNb>
+                                        <BldgNm>ASAP Studios</BldgNm>
+                                        <Flr>01</Flr>
+                                        <PstBx>200721</PstBx>
+                                        <Room>121</Room>
+                                        <PstCd>93309</PstCd>
+                                        <TwnNm>BAKERSFIELD</TwnNm>
+                                        <Ctry>US</Ctry>
+                                        <AdrLine>Unstructured Address123</AdrLine>
+                                    </PstlAdr>
+                                    <Id>
+                                        <PrvtId>
+                                            <DtAndPlcOfBirth>
+                                                <BirthDt>1985-09-10</BirthDt>
+                                                <PrvcOfBirth>Adam</PrvcOfBirth>
+                                                <CityOfBirth>Leicester</CityOfBirth>
+                                                <CtryOfBirth>GB</CtryOfBirth>
+                                            </DtAndPlcOfBirth>
+                                        </PrvtId>
+                                    </Id>
+                                    <CtctDtls>                <!-- Invoicee's contact details -->
+                                        <Nm>John Doe</Nm>
+                                        <MobNb>123456789</MobNb>
+                                        <EmailAdr>johnd1@xyzcorp.com</EmailAdr>
+                                        <JobTitl> CFO </JobTitl>
+                                    </CtctDtls>                                    
+                                </Invcee>
+                            </Strd>
+                        </RmtInf>
+                        <RltdDts>
+                            <IntrBkSttlmDt>2025-04-29</IntrBkSttlmDt>
+                        </RltdDts>
+                        <AddtlTxInf>Desc: From: Corporation Z, Remittance Info: "CINV, INV/123456
+                        /2025/04/01, 2025-04-29, USD, 1000, APDS, USD, 50, USD, 10, USD, 850, ABC
+                        D123, Finance, Account Receivables, MANNING ST, 1616, Bldg Name, 02, 1122
+                        , 121", Client Ref ID: 39307281YSXJEHQI202701, GS ID: SI2511900000177, Cl
+                        earing Ref: 39307281YSXJEHQI202701</AddtlTxInf>
+                    </TxDtls>
+                </NtryDtls>
+            </Ntry>
+        </Rpt>
+    </BkToCstmrAcctRpt>
+</Document>
+Sample 2
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.052.001.08">
+    <BkToCstmrAcctRpt>
+        <GrpHdr>
+            <MsgId>15875741400</MsgId>
+            <CreDtTm>2025-05-06T14:51:39.728Z</CreDtTm>
+            <AddtlInf>INTR</AddtlInf>
+        </GrpHdr>
+        <Rpt>
+            <Id>11871053550</Id>
+            <ElctrncSeqNb>980</ElctrncSeqNb>
+            <LglSeqNb>980</LglSeqNb>
+            <CreDtTm>2025-05-06T14:51:39.731Z</CreDtTm>
+            <FrToDt>
+                <FrDtTm>2025-04-29T11:30:00.000Z</FrDtTm>
+                <ToDtTm>2025-04-29T12:30:00.000Z</ToDtTm>
+            </FrToDt>
+            <Acct>
+                <Id>
+                    <Othr>
+                        <Id>103116583</Id>
+                    </Othr>
+                </Id>
+                <Tp>
+                    <Prtry>IBDA_DDA</Prtry>
+                </Tp>
+                <Ccy>USD</Ccy>
+                <Nm>Innatech Liquidity Management</Nm>
+                <Svcr>
+                    <FinInstnId>
+                        <BICFI>GSCRUS30</BICFI>
+                        <Nm>Goldman Sachs Bank</Nm>
+                    </FinInstnId>
+                </Svcr>
+            </Acct>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>ITAV</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="USD">165766826571.94</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2025-04-29T23:59:00.000Z</DtTm>
+                </Dt>
+            </Bal>
+            <Bal>
+                <Tp>
+                    <CdOrPrtry>
+                        <Cd>ITBD</Cd>
+                    </CdOrPrtry>
+                </Tp>
+                <Amt Ccy="USD">165766826571.94</Amt>
+                <CdtDbtInd>DBIT</CdtDbtInd>
+                <Dt>
+                    <DtTm>2025-04-29T23:59:00.000Z</DtTm>
+                </Dt>
+            </Bal>
+            <TxsSummry>
+                <TtlNtries>
+                    <NbOfNtries>1</NbOfNtries>
+                    <Sum>10000.0</Sum>
+                    <TtlNetNtry>
+                        <Amt>10000.0</Amt>
+                        <CdtDbtInd>CRDT</CdtDbtInd>
+                    </TtlNetNtry>
+                </TtlNtries>
+                <TtlCdtNtries>
+                    <NbOfNtries>1</NbOfNtries>
+                    <Sum>10000.0</Sum>
+                </TtlCdtNtries>
+                <TtlDbtNtries>
+                    <NbOfNtries>0</NbOfNtries>
+                    <Sum>0</Sum>
+                </TtlDbtNtries>
+            </TxsSummry>
+            <Ntry>
+                <NtryRef>330094150</NtryRef>
+                <Amt Ccy="USD">10000.00</Amt>
+                <CdtDbtInd>CRDT</CdtDbtInd>
+                <RvslInd>false</RvslInd>
+                <Sts>
+                    <Cd>BOOK</Cd>
+                </Sts>
+                <BookgDt>
+                    <DtTm>2025-05-22T13:08:30.000Z</DtTm>
+                </BookgDt>
+                <ValDt>
+                    <Dt>2025-05-22</Dt>
+                </ValDt>
+                <BkTxCd>
+                    <Domn>
+                        <Cd>PMNT</Cd>
+                        <Fmly>
+                            <Cd>IDDT</Cd>
+                            <SubFmlyCd>PADD</SubFmlyCd>
+                        </Fmly>
+                    </Domn>
+                    <Prtry>
+                        <Cd>ACH Debit Collection</Cd>
+                    </Prtry>
+                </BkTxCd>
+                <NtryDtls>
+                    <TxDtls>
+                        <Refs>
+                            <MsgId>4483201</MsgId>
+                            <AcctSvcrRef>SB2514200029136</AcctSvcrRef>
+                            <PmtInfId>BP25142111549723</PmtInfId>
+                            <EndToEndId>GSBNOPHMNFZT7P</EndToEndId>
+                            <TxId>SB2514200029136</TxId>
+                        </Refs>
+                        <AmtDtls>
+                            <InstdAmt>
+                                <Amt Ccy="USD">10000.00</Amt> 
+                            </InstdAmt>
+                            <TxAmt>
+                                <Amt Ccy="USD">10000.00</Amt>     <!-- Payment for 2 invoices -->
+                            </TxAmt>
+                        </AmtDtls>
+                        <RltdPties>
+                            <Dbtr>
+                                <Pty>
+                                    <Nm>Impact</Nm>
+                                </Pty>
+                            </Dbtr>
+                            <DbtrAcct>
+                                <Id>
+                                    <Othr>
+                                        <Id>101152038</Id>
+                                    </Othr>
+                                </Id>
+                                <Nm>Impact</Nm>
+                            </DbtrAcct>
+                        </RltdPties>
+                        <RltdAgts>
+                            <DbtrAgt>
+                                <FinInstnId>
+                                    <Othr>
+                                        <Id>026015079</Id>
+                                    </Othr>
+                                </FinInstnId>
+                            </DbtrAgt>
+                        </RltdAgts>
+                        <Purp>
+                            <Prtry>BILL PMT</Prtry>
+                        </Purp>
+                        <RmtInf>                 <!-- The RmtInf block contains 2 Strd blocks -->
+                                                              <!-- covering 2 invoice details -->
+                            <Strd>                                 <!-- Invoice 1 of 5000 USD -->
+                                <RfrdDocInf>
+                                    <Tp>
+                                        <CdOrPrtry>
+                                            <Cd>CINV</Cd>
+                                        </CdOrPrtry>
+                                    </Tp>
+                                    <Nb>INV/213231/2025/04/01</Nb>
+                                    <RltdDt>2025-04-29</RltdDt>
+                                </RfrdDocInf>
+                                <RfrdDocAmt>
+                                    <DuePyblAmt Ccy="USD">5150.0</DuePyblAmt>
+                                    <DscntApldAmt>
+                                        <Tp>
+                                            <Cd>APDS</Cd>
+                                        </Tp>
+                                        <Amt Ccy="USD">50.0</Amt>
+                                    </DscntApldAmt>
+                                    <AdjstmntAmtAndRsn>
+                                        <Amt Ccy="USD">100.0</Amt>
+                                        <CdtDbtInd>DBIT</CdtDbtInd>
+                                        <AddtlInf>100 USD deducted for delays</AddtlInf>
+                                    </AdjstmntAmtAndRsn>
+                                    <RmtdAmt Ccy="USD">5000.0</RmtdAmt>
+                                </RfrdDocAmt>
+                                <Invcr>
+                                    <Nm>ABCD123</Nm>
+                                    <PstlAdr>
+                                        <Dept>Finance</Dept>
+                                        <SubDept>Account Receivables</SubDept>
+                                        <StrtNm>MANNING ST</StrtNm>
+                                        <BldgNb>1616</BldgNb>
+                                        <BldgNm>Bldg Name</BldgNm>
+                                        <Flr>02</Flr>
+                                        <PstBx>1122</PstBx>
+                                        <Room>121</Room>
+                                        <PstCd>93309</PstCd>
+                                        <TwnNm>BAKERSFIELD</TwnNm>
+                                        <TwnLctnNm>Twn Lctn Nm</TwnLctnNm>
+                                        <DstrctNm>Dstrct Nm</DstrctNm>
+                                        <CtrySubDvsn>CA</CtrySubDvsn>
+                                        <Ctry>US</Ctry>
+                                        <AdrLine>Address Line</AdrLine>
+                                    </PstlAdr>
+                                    <Id>
+                                        <PrvtId>
+                                            <DtAndPlcOfBirth>
+                                                <BirthDt>1991-09-01</BirthDt>
+                                                <PrvcOfBirth>Province</PrvcOfBirth>
+                                                <CityOfBirth>NewYork</CityOfBirth>
+                                                <CtryOfBirth>US</CtryOfBirth>
+                                            </DtAndPlcOfBirth>
+                                        </PrvtId>
+                                    </Id>
+                                </Invcr>
+                                <Invcee>
+                                    <Nm>XYZ1234</Nm>
+                                    <PstlAdr>
+                                        <Dept>Finance</Dept>
+                                        <SubDept>Account Payables</SubDept>
+                                        <StrtNm>Fun ST</StrtNm>
+                                        <BldgNb>2009</BldgNb>
+                                        <BldgNm>ASAP Studios</BldgNm>
+                                        <Flr>01</Flr>
+                                        <PstBx>200721</PstBx>
+                                        <Room>121</Room>
+                                        <PstCd>93309</PstCd>
+                                        <TwnNm>BAKERSFIELD</TwnNm>
+                                        <Ctry>US</Ctry>
+                                        <AdrLine>Unstructured Address123</AdrLine>
+                                    </PstlAdr>
+                                </Invcee>
+                            </Strd>
+                            <Strd>                                 <!-- Invoice 2 of 5000 USD -->
+                                <RfrdDocInf>
+                                    <Tp>
+                                        <CdOrPrtry>
+                                            <Cd>CINV</Cd>
+                                        </CdOrPrtry>
+                                    </Tp>
+                                    <Nb>INV/9999/2025/04/01</Nb>
+                                    <RltdDt>2025-04-29</RltdDt>
+                                </RfrdDocInf>
+                                <RfrdDocAmt>
+                                    <DuePyblAmt Ccy="USD">5000.0</DuePyblAmt>
+                                    <RmtdAmt Ccy="USD">5000.0</RmtdAmt>
+                                </RfrdDocAmt>
+                                <Invcr>
+                                    <Nm>ABC Goods Delivery</Nm>
+                                </Invcr>
+                                <Invcee>
+                                    <Nm>Sample Furniture Company</Nm>
+                                </Invcee>
+                            </Strd>
+                        </RmtInf>
+                        <RltdDts>
+                            <IntrBkSttlmDt>2025-05-22</IntrBkSttlmDt>
+                        </RltdDts>
+                        <AddtlTxInf>SEC Code: PPD,Desc: Entry Description: BILL PMT; -, SEC: PPD, 
+                        Client Ref ID: FB/GS/DDFILEFB0003/DDBA0004, GS ID: BP25142111549723
+                        </AddtlTxInf>
+                    </TxDtls>
+                </NtryDtls>
+            </Ntry>
+        </Rpt>
+    </BkToCstmrAcctRpt>
+</Document>

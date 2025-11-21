@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:camt.053.001.02" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:iso:std:iso:20022:tech:xsd:camt.053.001.02 camt.053.001.02.xsd">
+
+<BkToCstmrStmt>
+  <GrpHdr>
+    <MsgId>053D2013-12-31T01:59:54.0N130000006</MsgId>
+    <CreDtTm>2013-12-31T01:59:40.0+01:00</CreDtTm>
+    <MsgPgntn>
+      <PgNb>1</PgNb>
+      <LastPgInd>true</LastPgInd>
+    </MsgPgntn>
+  </GrpHdr>
+  <Stmt>
+    <Id>0352C5320131231015954</Id>
+    <ElctrncSeqNb>130000006</ElctrncSeqNb>
+    <CreDtTm>2013-12-31T01:59:40.0+01:00</CreDtTm>
+    <Acct>
+      <Id>
+        <IBAN>DE58740618130100033626</IBAN>
+      </Id>
+      <Ccy>EUR</Ccy>
+      <Ownr>
+        <Nm>Testkonto Nummer 2</Nm>
+      </Ownr>
+      <Svcr>
+        <FinInstnId>
+          <BIC>GENODEF1PFK</BIC>
+          <Nm>VR-Bank Rottal-Inn eG</Nm>
+          <Othr>
+            <Id>DE 129267947</Id>
+            <Issr>UmsStId</Issr>
+          </Othr>
+        </FinInstnId>
+      </Svcr>
+    </Acct>
+    <Bal>
+      <Tp>
+        <CdOrPrtry>
+          <Cd>PRCD</Cd>
+        </CdOrPrtry>
+      </Tp>
+      <Amt Ccy="EUR">18.50</Amt>
+      <CdtDbtInd>CRDT</CdtDbtInd>
+      <Dt>
+        <Dt>2013-12-30</Dt>
+      </Dt>
+    </Bal>
+    <Bal>
+      <Tp>
+        <CdOrPrtry>
+          <Cd>CLBD</Cd>
+        </CdOrPrtry>
+      </Tp>
+      <Amt Ccy="EUR">17.40</Amt>
+      <CdtDbtInd>CRDT</CdtDbtInd>
+      <Dt>
+        <Dt>2013-12-30</Dt>
+      </Dt>
+    </Bal>
+    <Ntry>
+      <Amt Ccy="EUR">1.10</Amt>
+      <CdtDbtInd>DBIT</CdtDbtInd>
+      <Sts>BOOK</Sts>
+      <BookgDt>
+        <Dt>2013-12-30</Dt>
+      </BookgDt>
+      <ValDt>
+        <Dt>2013-12-30</Dt>
+      </ValDt>
+      <AcctSvcrRef>2013122812211780000</AcctSvcrRef>
+      <BkTxCd/>
+      <AddtlInfInd>
+        <MsgNmId>camt.054</MsgNmId>
+        <MsgId>054D2013-12-31T01:59:36.0N130000007</MsgId>
+      </AddtlInfInd>
+      <NtryDtls>
+        <Btch>
+          <PmtInfId>STZV-PmInf28122013-11:29-2</PmtInfId>
+          <NbOfTxs>2</NbOfTxs>
+        </Btch>
+        <TxDtls>
+          <BkTxCd>
+            <Prtry>
+              <Cd>NMSC+201</Cd>
+              <Issr>ZKA</Issr>
+            </Prtry>
+          </BkTxCd>
+        </TxDtls>
+      </NtryDtls>
+    </Ntry>
+  </Stmt>
+</BkToCstmrStmt>
+</Document>
