@@ -25,4 +25,12 @@
     <PackageVersion Include="FluentValidation" Version="11.11.0" />
   </ItemGroup>
 
+  <ItemGroup Label="Code Analysis">
+    <!-- StyleCop Analyzers -->
+    <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
+
+    <!-- SonarAnalyzer for C# -->
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.32.0.97167" />
+  </ItemGroup>
+
 </Project>
