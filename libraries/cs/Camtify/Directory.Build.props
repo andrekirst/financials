@@ -1,0 +1,31 @@
+<Project>
+  <PropertyGroup>
+    <!-- Build Settings -->
+    <ProjectTargetFramework>net9.0</ProjectTargetFramework>
+    <ProjectLangVersion>latest</ProjectLangVersion>
+    <ProjectNullable>enable</ProjectNullable>
+    <ProjectImplicitUsings>enable</ProjectImplicitUsings>
+    <ProjectTreatWarningsAsErrors>false</ProjectTreatWarningsAsErrors>
+    <ProjectGenerateDocumentationFile>true</ProjectGenerateDocumentationFile>
+
+    <!-- Package Metadata -->
+    <ProjectAuthors>Camtify</ProjectAuthors>
+    <ProjectCompany>Camtify</ProjectCompany>
+    <ProjectProduct>Camtify</ProjectProduct>
+    <ProjectCopyright>Copyright © Camtify</ProjectCopyright>
+    <ProjectPackageProjectUrl>https://github.com/andrekirst/financials</ProjectPackageProjectUrl>
+    <ProjectRepositoryUrl>https://github.com/andrekirst/financials</ProjectRepositoryUrl>
+    <ProjectRepositoryType>git</ProjectRepositoryType>
+    <ProjectPackageLicenseExpression>MIT</ProjectPackageLicenseExpression>
+    <ProjectPackageRequireLicenseAcceptance>false</ProjectPackageRequireLicenseAcceptance>
+
+    <!-- Versioning -->
+    <ProjectVersionPrefix>1.0.0</ProjectVersionPrefix>
+    <ProjectVersionSuffix>alpha</ProjectVersionSuffix>
+
+    <!-- NuGet Package Settings -->
+    <ProjectIsPackable>false</ProjectIsPackable>
+    <ProjectIncludeSymbols>true</ProjectIncludeSymbols>
+    <ProjectSymbolPackageFormat>snupkg</ProjectSymbolPackageFormat>
+  </PropertyGroup>
+</Project>

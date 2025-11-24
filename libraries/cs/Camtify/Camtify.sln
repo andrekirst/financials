@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Core", "Camtify.Core\Camtify.Core.csproj", "{A13DEB27-183B-40CA-A84C-F9119212D325}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Domain", "Camtify.Domain\Camtify.Domain.csproj", "{3B6A255B-DB72-4076-A551-795EE06E3015}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Parsing", "Camtify.Parsing\Camtify.Parsing.csproj", "{FAFBAC67-1CEF-4AC1-A6E2-B09F841E488E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Validation", "Camtify.Validation\Camtify.Validation.csproj", "{00E8E889-CE61-45DC-9FE8-FB7F45064C29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Generation", "Camtify.Generation\Camtify.Generation.csproj", "{A4DBA67D-B307-43E2-A4CA-E8B1B84F14AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Tests", "Camtify.Tests\Camtify.Tests.csproj", "{1FEBE4A3-E721-476F-89E0-278AB1958B1D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A13DEB27-183B-40CA-A84C-F9119212D325}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A13DEB27-183B-40CA-A84C-F9119212D325}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A13DEB27-183B-40CA-A84C-F9119212D325}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A13DEB27-183B-40CA-A84C-F9119212D325}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B6A255B-DB72-4076-A551-795EE06E3015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B6A255B-DB72-4076-A551-795EE06E3015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B6A255B-DB72-4076-A551-795EE06E3015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B6A255B-DB72-4076-A551-795EE06E3015}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAFBAC67-1CEF-4AC1-A6E2-B09F841E488E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAFBAC67-1CEF-4AC1-A6E2-B09F841E488E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAFBAC67-1CEF-4AC1-A6E2-B09F841E488E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAFBAC67-1CEF-4AC1-A6E2-B09F841E488E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00E8E889-CE61-45DC-9FE8-FB7F45064C29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00E8E889-CE61-45DC-9FE8-FB7F45064C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00E8E889-CE61-45DC-9FE8-FB7F45064C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00E8E889-CE61-45DC-9FE8-FB7F45064C29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4DBA67D-B307-43E2-A4CA-E8B1B84F14AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4DBA67D-B307-43E2-A4CA-E8B1B84F14AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4DBA67D-B307-43E2-A4CA-E8B1B84F14AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4DBA67D-B307-43E2-A4CA-E8B1B84F14AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FEBE4A3-E721-476F-89E0-278AB1958B1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FEBE4A3-E721-476F-89E0-278AB1958B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FEBE4A3-E721-476F-89E0-278AB1958B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FEBE4A3-E721-476F-89E0-278AB1958B1D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
