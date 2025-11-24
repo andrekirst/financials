@@ -17,8 +17,72 @@ from typing import List, Optional
 REPO = "andrekirst/financials"
 ISSUES_DIR = Path(__file__).parent / "individual"
 MARKDOWN_FILE = Path(__file__).parent / "issue-list.md"  # Ihre komplette Liste
-DRY_RUN = True  # Auf False setzen für echte Issue-Erstellung
+DRY_RUN = False  # Auf False setzen für echte Issue-Erstellung
 DELAY_BETWEEN_ISSUES = 1  # Sekunden zwischen Issues (Rate Limiting)
+
+# Label-Definitionen
+LABELS = {
+    # Prioritäten
+    "priority:high": {"color": "d73a4a", "description": "Kritisch für MVP"},
+    "priority:medium": {"color": "fbca04", "description": "Wichtig, aber nicht blockierend"},
+    "priority:low": {"color": "0e8a16", "description": "Nice-to-have"},
+
+    # Business Areas
+    "pain": {"color": "1d76db", "description": "PAIN Business Area"},
+    "pacs": {"color": "1d76db", "description": "PACS Business Area"},
+    "camt": {"color": "1d76db", "description": "CAMT Business Area"},
+    "acmt": {"color": "1d76db", "description": "ACMT Business Area"},
+    "admi": {"color": "1d76db", "description": "ADMI Business Area"},
+    "remt": {"color": "1d76db", "description": "REMT Business Area"},
+    "head": {"color": "1d76db", "description": "Business Application Header"},
+
+    # Kategorien
+    "setup": {"color": "0075ca", "description": "Projekt-Setup"},
+    "core": {"color": "0075ca", "description": "Core-Infrastruktur"},
+    "domain": {"color": "0075ca", "description": "Domain Models"},
+    "parsing": {"color": "0075ca", "description": "Parsing-Funktionalität"},
+    "generation": {"color": "0075ca", "description": "XML-Generierung"},
+    "validation": {"color": "0075ca", "description": "Validierung"},
+    "pipeline": {"color": "0075ca", "description": "Channel-Pipeline"},
+    "streaming": {"color": "0075ca", "description": "IAsyncEnumerable/Streaming"},
+    "transformation": {"color": "0075ca", "description": "Versions-Transformation"},
+    "testing": {"color": "0075ca", "description": "Tests"},
+    "performance": {"color": "0075ca", "description": "Performance/Benchmarks"},
+    "documentation": {"color": "0075ca", "description": "Dokumentation"},
+    "samples": {"color": "0075ca", "description": "Beispiel-Projekte"},
+    "di": {"color": "0075ca", "description": "Dependency Injection"},
+    "configuration": {"color": "0075ca", "description": "Konfiguration"},
+    "observability": {"color": "0075ca", "description": "Logging/Metrics/Tracing"},
+    "error-handling": {"color": "0075ca", "description": "Exception-Handling"},
+    "tooling": {"color": "0075ca", "description": "Entwickler-Tools"},
+    "codegen": {"color": "0075ca", "description": "Code-Generierung"},
+    "ci-cd": {"color": "0075ca", "description": "Build-Pipeline"},
+    "code-quality": {"color": "0075ca", "description": "Code-Analyse"},
+    "infrastructure": {"color": "0075ca", "description": "Infrastruktur"},
+    "dependencies": {"color": "0075ca", "description": "Dependencies"},
+    "interfaces": {"color": "0075ca", "description": "Interfaces"},
+    "models": {"color": "0075ca", "description": "Models"},
+    "enums": {"color": "0075ca", "description": "Enums"},
+    "factory": {"color": "0075ca", "description": "Factory Pattern"},
+    "builder": {"color": "0075ca", "description": "Builder Pattern"},
+    "orchestration": {"color": "0075ca", "description": "Orchestration"},
+    "business-rules": {"color": "0075ca", "description": "Business Rules"},
+    "mapping": {"color": "0075ca", "description": "Mapping"},
+    "mt": {"color": "0075ca", "description": "SWIFT MT Messages"},
+    "test-data": {"color": "0075ca", "description": "Test Data"},
+    "integration": {"color": "0075ca", "description": "Integration Tests"},
+    "benchmarks": {"color": "0075ca", "description": "Benchmarks"},
+    "memory": {"color": "0075ca", "description": "Memory Profiling"},
+    "logging": {"color": "0075ca", "description": "Logging"},
+    "metrics": {"color": "0075ca", "description": "Metrics"},
+    "tracing": {"color": "0075ca", "description": "Tracing"},
+    "health": {"color": "0075ca", "description": "Health Checks"},
+    "api-docs": {"color": "0075ca", "description": "API Documentation"},
+    "architecture": {"color": "0075ca", "description": "Architecture"},
+    "schemas": {"color": "0075ca", "description": "XSD Schemas"},
+    "output": {"color": "0075ca", "description": "Output/Writing"},
+    ".net8": {"color": "512bd4", "description": ".NET 8 Features"},
+}
 
 @dataclass
 class Issue:
@@ -146,6 +210,100 @@ def format_issue_body(description: str, tasks: List[str],
     body_parts.append(f"\n---\n\n**Schätzung:** {estimate}")
 
     return '\n\n'.join(body_parts)
+
+def check_label_exists(label_name: str) -> bool:
+    """Prüfe ob Label bereits existiert"""
+    try:
+        result = subprocess.run(
+            ['gh', 'label', 'list', '--repo', REPO, '--limit', '1000'],
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+        if result.returncode == 0:
+            return label_name in result.stdout
+        return False
+    except Exception:
+        return False
+
+def create_github_label(label_name: str, color: str, description: str) -> bool:
+    """Erstelle Label in GitHub"""
+    if DRY_RUN:
+        print(f"  [DRY RUN] Würde Label erstellen: {label_name}")
+        return True
+
+    try:
+        # Prüfe ob Label bereits existiert
+        if check_label_exists(label_name):
+            print(f"  ⏭️  Label existiert bereits: {label_name}")
+            return True
+
+        # Erstelle Label
+        cmd = [
+            'gh', 'label', 'create',
+            label_name,
+            '--repo', REPO,
+            '--color', color,
+            '--description', description
+        ]
+
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+
+        if result.returncode == 0:
+            print(f"  ✅ Label erstellt: {label_name}")
+            return True
+        else:
+            # Wenn Fehler "already exists", ist das OK
+            if "already exists" in result.stderr.lower():
+                print(f"  ⏭️  Label existiert bereits: {label_name}")
+                return True
+            print(f"  ❌ Fehler bei Label {label_name}: {result.stderr}")
+            return False
+
+    except subprocess.TimeoutExpired:
+        print(f"  ⏱️  Timeout bei Label: {label_name}")
+        return False
+    except Exception as e:
+        print(f"  ❌ Exception bei Label {label_name}: {e}")
+        return False
+
+def create_all_labels() -> bool:
+    """Erstelle alle benötigten Labels"""
+    print("🏷️  Erstelle GitHub Labels...")
+    print()
+
+    success_count = 0
+    failed_count = 0
+
+    for label_name, label_config in LABELS.items():
+        result = create_github_label(
+            label_name,
+            label_config["color"],
+            label_config["description"]
+        )
+
+        if result:
+            success_count += 1
+        else:
+            failed_count += 1
+
+        # Kleine Pause zwischen Label-Erstellungen
+        if not DRY_RUN:
+            time.sleep(0.2)
+
+    print()
+    print(f"📊 Label-Statistik:")
+    print(f"   ✅ Erfolgreich: {success_count}")
+    if failed_count > 0:
+        print(f"   ❌ Fehlgeschlagen: {failed_count}")
+    print()
+
+    return failed_count == 0
 
 def save_issue_markdown(issue: Issue):
     """Speichere Issue als Markdown-Datei"""
@@ -294,6 +452,24 @@ def main():
 
     # Erstelle Verzeichnis
     ISSUES_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Erstelle Labels BEVOR Issues erstellt werden
+    if not DRY_RUN:
+        print("=" * 70)
+        if not create_all_labels():
+            print("⚠️  Warnung: Einige Labels konnten nicht erstellt werden")
+            print("   Die Issues werden trotzdem erstellt, aber Labels fehlen ggf.")
+            print()
+            response = input("Fortfahren? (j/n): ")
+            if response.lower() != 'j':
+                print("❌ Abgebrochen")
+                return 1
+        print("=" * 70)
+        print()
+    else:
+        print("🏷️  [DRY RUN] Labels würden erstellt werden")
+        print(f"   → {len(LABELS)} Labels definiert")
+        print()
 
     # Statistiken
     success_count = 0
