@@ -19,7 +19,7 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
 
     <!-- JSON Serialization -->
-    <PackageVersion Include="System.Text.Json" Version="9.0.0" />
+    <PackageVersion Include="System.Text.Json" Version="10.0.0" />
 
     <!-- Validation -->
     <PackageVersion Include="FluentValidation" Version="11.11.0" />
