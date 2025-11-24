@@ -20,6 +20,27 @@ MARKDOWN_FILE = Path(__file__).parent / "issue-list.md"  # Ihre komplette Liste
 DRY_RUN = False  # Auf False setzen für echte Issue-Erstellung
 DELAY_BETWEEN_ISSUES = 1  # Sekunden zwischen Issues (Rate Limiting)
 
+# Milestone-Definitionen
+MILESTONES = [
+    "Phase 1: Foundation",
+    "Phase 2: Core Domain",
+    "Phase 3: Core Parsing",
+    "Phase 4: PAIN Parser",
+    "Phase 5: PACS Parser",
+    "Phase 6: CAMT Parser",
+    "Phase 7: Further Business Areas",
+    "Phase 8: Streaming & Pipeline",
+    "Phase 9: Schema Validation",
+    "Phase 10: XML Generation",
+    "Phase 11: Version Transformation",
+    "Phase 12: Testing",
+    "Phase 13: Performance",
+    "Phase 14: Observability",
+    "Phase 15: DI & Configuration",
+    "Phase 16: Documentation",
+    "Phase 17: Code Generation (Optional)",
+]
+
 # Label-Definitionen
 LABELS = {
     # Prioritäten
@@ -305,6 +326,95 @@ def create_all_labels() -> bool:
 
     return failed_count == 0
 
+def check_milestone_exists(milestone_title: str) -> bool:
+    """Prüfe ob Milestone bereits existiert"""
+    try:
+        result = subprocess.run(
+            ['gh', 'api', f'repos/{REPO}/milestones', '--jq', '.[].title'],
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+        if result.returncode == 0:
+            return milestone_title in result.stdout
+        return False
+    except Exception:
+        return False
+
+def create_github_milestone(milestone_title: str) -> bool:
+    """Erstelle Milestone in GitHub"""
+    if DRY_RUN:
+        print(f"  [DRY RUN] Würde Milestone erstellen: {milestone_title}")
+        return True
+
+    try:
+        # Prüfe ob Milestone bereits existiert
+        if check_milestone_exists(milestone_title):
+            print(f"  ⏭️  Milestone existiert bereits: {milestone_title}")
+            return True
+
+        # Erstelle Milestone
+        cmd = [
+            'gh', 'api',
+            f'repos/{REPO}/milestones',
+            '--method', 'POST',
+            '--field', f'title={milestone_title}'
+        ]
+
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+
+        if result.returncode == 0:
+            print(f"  ✅ Milestone erstellt: {milestone_title}")
+            return True
+        else:
+            # Wenn Fehler "already exists", ist das OK
+            if "already_exists" in result.stderr.lower():
+                print(f"  ⏭️  Milestone existiert bereits: {milestone_title}")
+                return True
+            print(f"  ❌ Fehler bei Milestone {milestone_title}: {result.stderr}")
+            return False
+
+    except subprocess.TimeoutExpired:
+        print(f"  ⏱️  Timeout bei Milestone: {milestone_title}")
+        return False
+    except Exception as e:
+        print(f"  ❌ Exception bei Milestone {milestone_title}: {e}")
+        return False
+
+def create_all_milestones() -> bool:
+    """Erstelle alle benötigten Milestones"""
+    print("🎯 Erstelle GitHub Milestones...")
+    print()
+
+    success_count = 0
+    failed_count = 0
+
+    for milestone_title in MILESTONES:
+        result = create_github_milestone(milestone_title)
+
+        if result:
+            success_count += 1
+        else:
+            failed_count += 1
+
+        # Kleine Pause zwischen Milestone-Erstellungen
+        if not DRY_RUN:
+            time.sleep(0.2)
+
+    print()
+    print(f"📊 Milestone-Statistik:")
+    print(f"   ✅ Erfolgreich: {success_count}")
+    if failed_count > 0:
+        print(f"   ❌ Fehlgeschlagen: {failed_count}")
+    print()
+
+    return failed_count == 0
+
 def save_issue_markdown(issue: Issue):
     """Speichere Issue als Markdown-Datei"""
     ISSUES_DIR.mkdir(parents=True, exist_ok=True)
@@ -453,9 +563,11 @@ def main():
     # Erstelle Verzeichnis
     ISSUES_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Erstelle Labels BEVOR Issues erstellt werden
+    # Erstelle Labels und Milestones BEVOR Issues erstellt werden
     if not DRY_RUN:
         print("=" * 70)
+
+        # Labels erstellen
         if not create_all_labels():
             print("⚠️  Warnung: Einige Labels konnten nicht erstellt werden")
             print("   Die Issues werden trotzdem erstellt, aber Labels fehlen ggf.")
@@ -464,11 +576,29 @@ def main():
             if response.lower() != 'j':
                 print("❌ Abgebrochen")
                 return 1
+
+        print("=" * 70)
+        print()
+        print("=" * 70)
+
+        # Milestones erstellen
+        if not create_all_milestones():
+            print("⚠️  Warnung: Einige Milestones konnten nicht erstellt werden")
+            print("   Die Issues werden trotzdem erstellt, aber Milestones fehlen ggf.")
+            print()
+            response = input("Fortfahren? (j/n): ")
+            if response.lower() != 'j':
+                print("❌ Abgebrochen")
+                return 1
+
         print("=" * 70)
         print()
     else:
         print("🏷️  [DRY RUN] Labels würden erstellt werden")
         print(f"   → {len(LABELS)} Labels definiert")
+        print()
+        print("🎯 [DRY RUN] Milestones würden erstellt werden")
+        print(f"   → {len(MILESTONES)} Milestones definiert")
         print()
 
     # Statistiken
