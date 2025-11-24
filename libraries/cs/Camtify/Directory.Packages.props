@@ -22,7 +22,7 @@
     <PackageVersion Include="System.Text.Json" Version="9.0.0" />
 
     <!-- Validation -->
-    <PackageVersion Include="FluentValidation" Version="11.11.0" />
+    <PackageVersion Include="FluentValidation" Version="12.1.0" />
   </ItemGroup>
 
   <ItemGroup Label="Code Analysis">
