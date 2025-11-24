@@ -2,22 +2,50 @@
 
 Diese Dateien enthalten alle geplanten Issues für das ISO 20022 Parser Library Projekt.
 
-## Import-Methoden
+## 🚀 Schnellstart: Automatische Issue-Erstellung
 
-### Methode 1: CSV Bulk Import (Empfohlen)
+### ⭐ Methode 1: Automatischer Parser (Empfohlen)
+
+Das einfachste und schnellste Verfahren:
+
+```bash
+cd .github/issues
+
+# 1. Kopiere deine komplette Issue-Liste in issue-list.md
+nano issue-list.md  # oder bevorzugter Editor
+
+# 2. Test-Modus (erstellt nur Markdown-Dateien)
+python3 parse-and-create-issues.py
+
+# 3. Prüfe die generierten Dateien
+ls -la individual/
+
+# 4. Produktiv-Modus (erstellt echte GitHub Issues)
+# Editiere parse-and-create-issues.py: DRY_RUN = False
+python3 parse-and-create-issues.py
+```
+
+**Vorteile:**
+- ✅ Automatisches Parsen deiner Markdown-Liste
+- ✅ Alle 110 Issues mit einem Befehl
+- ✅ Test-Modus verfügbar
+- ✅ Labels und Milestones automatisch
+- ✅ Einzelne Markdown-Dateien als Backup
+
+### Methode 2: CSV Bulk Import
 
 1. Gehe zu: `https://github.com/andrekirst/financials/issues/import`
 2. Lade die Datei `issues-import.csv` hoch
 3. GitHub erstellt automatisch alle Issues
 
-### Methode 2: GitHub CLI (gh)
+### Methode 3: GitHub CLI (gh) manuell
 
 ```bash
 cd .github/issues
 bash create-issues.sh
 ```
 
-### Methode 3: Manuell
+### Methode 4: Manuell
 
 Nutze die einzelnen Markdown-Dateien im Ordner `individual/` als Vorlage.
 
