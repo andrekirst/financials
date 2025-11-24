@@ -1,0 +1,236 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '9.0.x'
+  SOLUTION_PATH: 'libraries/cs/Camtify/Camtify.sln'
+  WORKING_DIRECTORY: 'libraries/cs/Camtify'
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project:
+          - name: 'Camtify.Core'
+            test-project: 'Camtify.Core.Tests'
+          - name: 'Camtify.Domain'
+            test-project: 'Camtify.Domain.Tests'
+          - name: 'Camtify.Messages.Camt052'
+            test-project: 'Camtify.Messages.Camt052.Tests'
+          - name: 'Camtify.Messages.Camt053'
+            test-project: 'Camtify.Messages.Camt053.Tests'
+          - name: 'Camtify.Messages.Camt054'
+            test-project: 'Camtify.Messages.Camt054.Tests'
+          - name: 'Camtify.Messages.Mt940'
+            test-project: 'Camtify.Messages.Mt940.Tests'
+      fail-fast: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for better SonarCloud analysis
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dotnet restore ${{ env.SOLUTION_PATH }}
+
+      - name: Build solution
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dotnet build ${{ env.SOLUTION_PATH }} --configuration Release --no-restore
+
+      - name: Run tests with coverage
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: |
+          dotnet test ${{ matrix.project.test-project }}/${{ matrix.project.test-project }}.csproj \
+            --configuration Release \
+            --no-build \
+            --verbosity normal \
+            --collect:"XPlat Code Coverage" \
+            --results-directory ./TestResults/${{ matrix.project.test-project }} \
+            --logger "trx;LogFileName=test-results.trx"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.project.name }}
+          path: ${{ env.WORKING_DIRECTORY }}/TestResults/${{ matrix.project.test-project }}/*.trx
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.project.name }}
+          path: ${{ env.WORKING_DIRECTORY }}/TestResults/${{ matrix.project.test-project }}/**/coverage.cobertura.xml
+
+  code-coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all coverage reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-*
+          path: coverage-reports
+          merge-multiple: true
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage-reports/**/coverage.cobertura.xml
+          flags: unittests
+          name: codecov-camtify
+          fail_ci_if_error: false
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  sonarcloud:
+    name: SonarCloud Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Install SonarCloud scanner
+        run: |
+          dotnet tool install --global dotnet-sonarscanner || true
+
+      - name: Restore dependencies
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dotnet restore ${{ env.SOLUTION_PATH }}
+
+      - name: Build and analyze
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          dotnet sonarscanner begin \
+            /k:"andrekirst_financials" \
+            /o:"andrekirst" \
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+            /d:sonar.host.url="https://sonarcloud.io" \
+            /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.cobertura.xml"
+
+          dotnet build ${{ env.SOLUTION_PATH }} --configuration Release --no-restore
+
+          dotnet test ${{ env.SOLUTION_PATH }} \
+            --configuration Release \
+            --no-build \
+            --verbosity normal \
+            --collect:"XPlat Code Coverage" \
+            --results-directory ./TestResults
+
+          dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+  package:
+    name: Create NuGet Packages
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+
+    strategy:
+      matrix:
+        package:
+          - 'Camtify.Messages.Camt052'
+          - 'Camtify.Messages.Camt053'
+          - 'Camtify.Messages.Camt054'
+          - 'Camtify.Messages.Mt940'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dotnet restore ${{ env.SOLUTION_PATH }}
+
+      - name: Build
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dotnet build ${{ env.SOLUTION_PATH }} --configuration Release --no-restore
+
+      - name: Pack NuGet package
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: |
+          dotnet pack ${{ matrix.package }}/${{ matrix.package }}.csproj \
+            --configuration Release \
+            --no-build \
+            --output ./nupkgs \
+            -p:PackageVersion=0.1.0-alpha.${{ github.run_number }}
+
+      - name: Upload NuGet package
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-${{ matrix.package }}
+          path: ${{ env.WORKING_DIRECTORY }}/nupkgs/*.nupkg
+
+  publish-summary:
+    name: Publish Summary
+    runs-on: ubuntu-latest
+    needs: [build-and-test, code-coverage, sonarcloud, package]
+    if: always()
+
+    steps:
+      - name: Download all test results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: test-results-*
+          path: test-results
+
+      - name: Publish test results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Test Results
+          path: 'test-results/**/*.trx'
+          reporter: dotnet-trx
+          fail-on-error: false
+
+      - name: Create summary
+        run: |
+          echo "## CI Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Build: ${{ needs.build-and-test.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "📊 Coverage: ${{ needs.code-coverage.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "🔍 SonarCloud: ${{ needs.sonarcloud.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "📦 Package: ${{ needs.package.result }}" >> $GITHUB_STEP_SUMMARY

@@ -1,5 +1,10 @@
 # Camtify
 
+[![CI](https://github.com/andrekirst/financials/actions/workflows/ci.yml/badge.svg)](https://github.com/andrekirst/financials/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/andrekirst/financials/branch/main/graph/badge.svg)](https://codecov.io/gh/andrekirst/financials)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=andrekirst_financials&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=andrekirst_financials)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A modular .NET library for parsing, validating, and generating financial messages and account statements.
 
 ## Overview

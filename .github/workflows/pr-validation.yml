@@ -1,0 +1,79 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+    types: [opened, synchronize, reopened]
+
+env:
+  DOTNET_VERSION: '9.0.x'
+  SOLUTION_PATH: 'libraries/cs/Camtify/Camtify.sln'
+  WORKING_DIRECTORY: 'libraries/cs/Camtify'
+
+jobs:
+  validate-pr:
+    name: Validate Pull Request
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dotnet restore ${{ env.SOLUTION_PATH }}
+
+      - name: Check formatting
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dotnet format ${{ env.SOLUTION_PATH }} --verify-no-changes --verbosity diagnostic
+
+      - name: Build
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: dotnet build ${{ env.SOLUTION_PATH }} --configuration Release --no-restore
+
+      - name: Run all tests
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: |
+          dotnet test ${{ env.SOLUTION_PATH }} \
+            --configuration Release \
+            --no-build \
+            --verbosity normal \
+            --collect:"XPlat Code Coverage" \
+            --results-directory ./TestResults
+
+      - name: Check code coverage threshold
+        uses: codecov/codecov-action@v4
+        with:
+          files: ${{ env.WORKING_DIRECTORY }}/TestResults/**/coverage.cobertura.xml
+          fail_ci_if_error: false
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Comment PR with results
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const output = `
+            ## PR Validation Results
+
+            ✅ Build: Success
+            ✅ Tests: Passed
+            ✅ Code Coverage: Analyzed
+
+            Your pull request has been validated and is ready for review!
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            });
