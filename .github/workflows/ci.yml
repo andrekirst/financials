@@ -107,6 +107,7 @@ jobs:
   sonarcloud:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
+    if: secrets.SONAR_TOKEN != ''
 
     steps:
       - name: Checkout code
@@ -211,6 +212,9 @@ jobs:
     if: always()
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Download all test results
         uses: actions/download-artifact@v4
         with:
