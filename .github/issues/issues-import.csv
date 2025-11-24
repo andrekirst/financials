@@ -1,0 +1,141 @@
+title,body,labels,milestone,assignee
+"Solution-Struktur für ISO20022 anlegen","## Beschreibung
+
+Erstelle eine .NET 8 Solution mit modularer Struktur für das ISO 20022 Parser-Projekt.
+
+## Aufgaben
+
+- [ ] Solution `ISO20022.sln` erstellen
+- [ ] Projekt `ISO20022.Core` anlegen (Interfaces, Abstractions)
+- [ ] Projekt `ISO20022.Domain` anlegen (Gemeinsame Models)
+- [ ] Projekt `ISO20022.Parsing` anlegen (Parser-Infrastruktur)
+- [ ] Projekt `ISO20022.Validation` anlegen (Schema & Business Rules)
+- [ ] Projekt `ISO20022.Generation` anlegen (XML Writer)
+- [ ] Projekt `ISO20022.Tests` anlegen (Unit Tests)
+- [ ] `Directory.Build.props` mit gemeinsamen Settings konfigurieren:
+  - Nullable: enable
+  - ImplicitUsings: enable
+  - LangVersion: latest
+  - TargetFramework: net8.0
+- [ ] Struktur für separate NuGet-Pakete pro Business Area vorbereiten
+
+## Akzeptanzkriterien
+
+- Solution baut erfolgreich
+- Alle Projekte referenzieren korrekt
+- Gemeinsame Build-Properties funktionieren
+
+## Schätzung
+
+1-2h","setup,infrastructure,priority:high","Phase 1: Foundation",""
+"Business-Area-Projekt-Template erstellen","## Beschreibung
+
+Erstelle ein Template und Konventionen für Business-Area-spezifische Projekte.
+
+## Aufgaben
+
+- [ ] Template-Struktur definieren für `ISO20022.{Area}` Projekte
+- [ ] Ordnerstruktur festlegen:
+  ```
+  ISO20022.Pain/
+    Models/
+    Parsers/
+    Writers/
+    Validators/
+  ```
+- [ ] Namespace-Konventionen dokumentieren
+- [ ] Dateibenennung-Konventionen definieren
+- [ ] CONTRIBUTING.md mit Entwickler-Guidelines erstellen
+- [ ] Beispiel-Projekt `ISO20022.Pain` als Referenz anlegen
+
+## Akzeptanzkriterien
+
+- Template ist dokumentiert
+- Beispiel-Projekt folgt Template
+- CONTRIBUTING.md ist vollständig
+
+## Schätzung
+
+1-2h","setup,documentation,priority:high","Phase 1: Foundation",""
+"NuGet Central Package Management","## Beschreibung
+
+Konfiguriere zentrales Package Management für konsistente Dependency-Versionen.
+
+## Aufgaben
+
+- [ ] `Directory.Packages.props` erstellen
+- [ ] Core-Dependencies hinzufügen:
+  - Microsoft.Extensions.DependencyInjection.Abstractions
+  - Microsoft.Extensions.Options
+  - Microsoft.Extensions.Logging.Abstractions
+  - System.Threading.Channels
+- [ ] Test-Dependencies hinzufügen:
+  - xUnit
+  - FluentAssertions
+  - Moq
+  - BenchmarkDotNet
+- [ ] Package-Struktur für NuGet-Veröffentlichung planen
+- [ ] `nuget.config` für Package-Sources konfigurieren
+
+## Akzeptanzkriterien
+
+- Alle Projekte nutzen zentrale Versionen
+- Keine Version-Konflikte
+- Dokumentation der Package-Strategie
+
+## Schätzung
+
+1h","setup,dependencies,priority:medium","Phase 1: Foundation",""
+"Build-Pipeline & CI/CD Setup","## Beschreibung
+
+Erstelle GitHub Actions Workflow für automatisierte Builds und Tests.
+
+## Aufgaben
+
+- [ ] `.github/workflows/build.yml` erstellen
+- [ ] Build-Job konfigurieren:
+  - dotnet restore
+  - dotnet build
+  - dotnet test mit Coverage
+- [ ] Matrix-Build für verschiedene OS (ubuntu, windows)
+- [ ] Code Coverage Report generieren (Coverlet)
+- [ ] Coverage-Upload zu Codecov oder ähnlichem
+- [ ] NuGet Pack Job für Release-Branches
+- [ ] SonarCloud Integration (optional)
+- [ ] Branch Protection Rules dokumentieren
+
+## Akzeptanzkriterien
+
+- PR-Builds laufen automatisch
+- Tests werden ausgeführt
+- Coverage wird reported
+- NuGet-Pakete werden erstellt
+
+## Schätzung
+
+2-3h","setup,ci-cd,priority:high","Phase 1: Foundation",""
+"EditorConfig & Code Analyzers","## Beschreibung
+
+Konfiguriere Code-Style und statische Analyse für konsistente Code-Qualität.
+
+## Aufgaben
+
+- [ ] `.editorconfig` mit C#-Conventions erstellen
+- [ ] Naming-Conventions definieren
+- [ ] Formatting-Rules festlegen
+- [ ] Analyzers hinzufügen:
+  - Microsoft.CodeAnalysis.NetAnalyzers
+  - StyleCop.Analyzers
+  - SonarAnalyzer.CSharp
+- [ ] `.globalconfig` für Severity-Einstellungen
+- [ ] Warnings als Errors konfigurieren (in Release)
+
+## Akzeptanzkriterien
+
+- Alle Projekte nutzen gleiche Code-Style-Rules
+- Analyzer-Warnings werden angezeigt
+- CI-Build schlägt bei Violations fehl
+
+## Schätzung
+
+1h","setup,code-quality,priority:medium","Phase 1: Foundation",""
