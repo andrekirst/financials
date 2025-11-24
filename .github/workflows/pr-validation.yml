@@ -7,7 +7,7 @@ on:
 
 env:
   DOTNET_VERSION: '9.0.x'
-  SOLUTION_PATH: 'libraries/cs/Camtify/Camtify.sln'
+  SOLUTION_PATH: 'Camtify.sln'
   WORKING_DIRECTORY: 'libraries/cs/Camtify'
 
 jobs:
@@ -31,14 +31,19 @@ jobs:
         run: dotnet restore ${{ env.SOLUTION_PATH }}
 
       - name: Check formatting
+        id: format
         working-directory: ${{ env.WORKING_DIRECTORY }}
         run: dotnet format ${{ env.SOLUTION_PATH }} --verify-no-changes --verbosity diagnostic
+        continue-on-error: true
 
       - name: Build
+        id: build
         working-directory: ${{ env.WORKING_DIRECTORY }}
         run: dotnet build ${{ env.SOLUTION_PATH }} --configuration Release --no-restore
+        continue-on-error: true
 
       - name: Run all tests
+        id: test
         working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
           dotnet test ${{ env.SOLUTION_PATH }} \
@@ -47,28 +52,45 @@ jobs:
             --verbosity normal \
             --collect:"XPlat Code Coverage" \
             --results-directory ./TestResults
+        continue-on-error: true
 
       - name: Check code coverage threshold
+        id: coverage
         uses: codecov/codecov-action@v4
         with:
           files: ${{ env.WORKING_DIRECTORY }}/TestResults/**/coverage.cobertura.xml
           fail_ci_if_error: false
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        continue-on-error: true
 
       - name: Comment PR with results
         uses: actions/github-script@v7
         if: always()
         with:
           script: |
+            const formatStatus = '${{ steps.format.outcome }}' === 'success' ? '✅' : '❌';
+            const buildStatus = '${{ steps.build.outcome }}' === 'success' ? '✅' : '❌';
+            const testStatus = '${{ steps.test.outcome }}' === 'success' ? '✅' : '❌';
+            const coverageStatus = '${{ steps.coverage.outcome }}' === 'success' ? '✅' : '⚠️';
+
+            const allSuccess = '${{ steps.format.outcome }}' === 'success' &&
+                              '${{ steps.build.outcome }}' === 'success' &&
+                              '${{ steps.test.outcome }}' === 'success';
+
+            const summary = allSuccess
+              ? 'Your pull request has been validated and is ready for review!'
+              : 'Some validation checks failed. Please review the details above.';
+
             const output = `
             ## PR Validation Results
 
-            ✅ Build: Success
-            ✅ Tests: Passed
-            ✅ Code Coverage: Analyzed
+            ${formatStatus} Code Formatting: ${{ steps.format.outcome }}
+            ${buildStatus} Build: ${{ steps.build.outcome }}
+            ${testStatus} Tests: ${{ steps.test.outcome }}
+            ${coverageStatus} Code Coverage: ${{ steps.coverage.outcome }}
 
-            Your pull request has been validated and is ready for review!
+            ${summary}
             `;
 
             github.rest.issues.createComment({
@@ -77,3 +99,8 @@ jobs:
               repo: context.repo.repo,
               body: output
             });
+
+            // Fail the job if critical steps failed
+            if (!allSuccess) {
+              core.setFailed('PR validation failed');
+            }

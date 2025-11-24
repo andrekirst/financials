@@ -9,7 +9,7 @@ on:
 
 env:
   DOTNET_VERSION: '9.0.x'
-  SOLUTION_PATH: 'libraries/cs/Camtify/Camtify.sln'
+  SOLUTION_PATH: 'Camtify.sln'
   WORKING_DIRECTORY: 'libraries/cs/Camtify'
 
 jobs:
