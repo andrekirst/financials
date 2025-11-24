@@ -437,11 +437,36 @@ def save_issue_markdown(issue: Issue):
 
     return filename
 
+def check_issue_exists(issue_title: str) -> bool:
+    """Prüfe ob Issue mit diesem Titel bereits existiert"""
+    try:
+        result = subprocess.run(
+            ['gh', 'issue', 'list', '--repo', REPO, '--limit', '1000',
+             '--state', 'all', '--search', f'"{issue_title}" in:title'],
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+        if result.returncode == 0:
+            # Exakter Titel-Match prüfen
+            for line in result.stdout.split('\n'):
+                if issue_title in line:
+                    return True
+            return False
+        return False
+    except Exception:
+        return False
+
 def create_github_issue(issue: Issue) -> bool:
     """Erstelle Issue über GitHub CLI"""
 
     if DRY_RUN:
         print(f"  [DRY RUN] Würde erstellen: #{issue.number} - {issue.title}")
+        return True
+
+    # Prüfe ob Issue bereits existiert
+    if check_issue_exists(issue.title):
+        print(f"  ⏭️  Issue existiert bereits: #{issue.number} - {issue.title}")
         return True
 
     try:
@@ -604,6 +629,7 @@ def main():
     # Statistiken
     success_count = 0
     failed_count = 0
+    skipped_count = 0
 
     # Verarbeite Issues
     print("📝 Erstelle Issues...")
@@ -616,8 +642,12 @@ def main():
         markdown_file = save_issue_markdown(issue)
         print(f"  📄 Markdown: {markdown_file.name}")
 
+        # Prüfe ob Issue bereits existiert (nur im Production-Modus)
+        if not DRY_RUN and check_issue_exists(issue.title):
+            print(f"  ⏭️  Issue existiert bereits, überspringe...")
+            skipped_count += 1
         # Erstelle in GitHub
-        if create_github_issue(issue):
+        elif create_github_issue(issue):
             success_count += 1
         else:
             failed_count += 1
@@ -633,7 +663,9 @@ def main():
     print("✨ Fertig!")
     print("=" * 70)
     print(f"📊 Statistik:")
-    print(f"   ✅ Erfolgreich: {success_count}")
+    print(f"   ✅ Neu erstellt: {success_count}")
+    if skipped_count > 0:
+        print(f"   ⏭️  Übersprungen (existieren bereits): {skipped_count}")
     if failed_count > 0:
         print(f"   ❌ Fehlgeschlagen: {failed_count}")
     print(f"   📄 Markdown-Dateien: {ISSUES_DIR}")
