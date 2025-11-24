@@ -16,7 +16,7 @@
 
   <ItemGroup Label="Runtime Dependencies">
     <!-- Logging -->
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
 
     <!-- JSON Serialization -->
     <PackageVersion Include="System.Text.Json" Version="9.0.0" />
