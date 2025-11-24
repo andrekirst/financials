@@ -28,4 +28,8 @@
     <SymbolPackageFormat>$(ProjectSymbolPackageFormat)</SymbolPackageFormat>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" />
+  </ItemGroup>
+
 </Project>

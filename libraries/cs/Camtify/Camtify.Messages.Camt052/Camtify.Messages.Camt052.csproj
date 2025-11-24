@@ -16,12 +16,12 @@
     <RepositoryType>$(ProjectRepositoryType)</RepositoryType>
     <PackageLicenseExpression>$(ProjectPackageLicenseExpression)</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>$(ProjectPackageRequireLicenseAcceptance)</PackageRequireLicenseAcceptance>
-    <VersionPrefix>$(ProjectVersionPrefix)</VersionPrefix>
-    <VersionSuffix>$(ProjectVersionSuffix)</VersionSuffix>
     <IncludeSymbols>$(ProjectIncludeSymbols)</IncludeSymbols>
     <SymbolPackageFormat>$(ProjectSymbolPackageFormat)</SymbolPackageFormat>
 
     <!-- Business Area specific -->
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
     <IsPackable>true</IsPackable>
     <PackageId>Camtify.Messages.Camt052</PackageId>
     <RootNamespace>Camtify.Messages.Camt052</RootNamespace>

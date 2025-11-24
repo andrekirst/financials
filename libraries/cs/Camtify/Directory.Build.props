@@ -27,5 +27,11 @@
     <ProjectIsPackable>false</ProjectIsPackable>
     <ProjectIncludeSymbols>true</ProjectIncludeSymbols>
     <ProjectSymbolPackageFormat>snupkg</ProjectSymbolPackageFormat>
+
+    <!-- Build Quality Settings -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 </Project>
