@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(ProjectTargetFramework)</TargetFramework>
+    <LangVersion>$(ProjectLangVersion)</LangVersion>
+    <Nullable>$(ProjectNullable)</Nullable>
+    <ImplicitUsings>$(ProjectImplicitUsings)</ImplicitUsings>
+    <TreatWarningsAsErrors>$(ProjectTreatWarningsAsErrors)</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>$(ProjectGenerateDocumentationFile)</GenerateDocumentationFile>
+    <Authors>$(ProjectAuthors)</Authors>
+    <Company>$(ProjectCompany)</Company>
+    <Product>$(ProjectProduct)</Product>
+    <Copyright>$(ProjectCopyright)</Copyright>
+    <PackageProjectUrl>$(ProjectPackageProjectUrl)</PackageProjectUrl>
+    <RepositoryUrl>$(ProjectRepositoryUrl)</RepositoryUrl>
+    <RepositoryType>$(ProjectRepositoryType)</RepositoryType>
+    <PackageLicenseExpression>$(ProjectPackageLicenseExpression)</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>$(ProjectPackageRequireLicenseAcceptance)</PackageRequireLicenseAcceptance>
+    <VersionPrefix>$(ProjectVersionPrefix)</VersionPrefix>
+    <VersionSuffix>$(ProjectVersionSuffix)</VersionSuffix>
+    <IncludeSymbols>$(ProjectIncludeSymbols)</IncludeSymbols>
+    <SymbolPackageFormat>$(ProjectSymbolPackageFormat)</SymbolPackageFormat>
+
+    <!-- Business Area specific -->
+    <IsPackable>true</IsPackable>
+    <PackageId>Camtify.Messages.Camt053</PackageId>
+    <RootNamespace>Camtify.Messages.Camt053</RootNamespace>
+    <AssemblyName>Camtify.Messages.Camt053</AssemblyName>
+    <Description>Camtify support for ISO 20022 CAMT.053 (Bank to Customer Statement) messages</Description>
+    <PackageTags>finance;banking;camt;iso20022;cash-management;camt053;account-statement</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Camtify.Core\Camtify.Core.csproj" />
+    <ProjectReference Include="..\Camtify.Domain\Camtify.Domain.csproj" />
+    <ProjectReference Include="..\Camtify.Parsing\Camtify.Parsing.csproj" />
+    <ProjectReference Include="..\Camtify.Validation\Camtify.Validation.csproj" />
+    <ProjectReference Include="..\Camtify.Generation\Camtify.Generation.csproj" />
+  </ItemGroup>
+
+</Project>

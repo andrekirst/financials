@@ -18,21 +18,17 @@
     <PackageRequireLicenseAcceptance>$(ProjectPackageRequireLicenseAcceptance)</PackageRequireLicenseAcceptance>
     <VersionPrefix>$(ProjectVersionPrefix)</VersionPrefix>
     <VersionSuffix>$(ProjectVersionSuffix)</VersionSuffix>
-    <IsPackable>$(ProjectIsPackable)</IsPackable>
     <IncludeSymbols>$(ProjectIncludeSymbols)</IncludeSymbols>
     <SymbolPackageFormat>$(ProjectSymbolPackageFormat)</SymbolPackageFormat>
+
+    <!-- Business Area specific -->
+    <IsPackable>true</IsPackable>
+    <PackageId>Camtify.Messages.Camt054</PackageId>
+    <RootNamespace>Camtify.Messages.Camt054</RootNamespace>
+    <AssemblyName>Camtify.Messages.Camt054</AssemblyName>
+    <Description>Camtify support for ISO 20022 CAMT.054 (Bank to Customer Debit/Credit Notification) messages</Description>
+    <PackageTags>finance;banking;camt;iso20022;cash-management;camt054;notifications</PackageTags>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageReference Include="xunit" Version="2.9.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Using Include="Xunit" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Camtify.Core\Camtify.Core.csproj" />
