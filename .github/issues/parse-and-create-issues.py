@@ -122,8 +122,8 @@ def parse_markdown_file(filepath: Path) -> List[Issue]:
         estimate = match.group(4).strip()
         body_content = match.group(5).strip()
 
-        # Parse Labels
-        labels = [label.strip() for label in labels_str.split(',')]
+        # Parse Labels (entferne Backticks und Whitespace)
+        labels = [label.strip().strip('`') for label in labels_str.split(',')]
 
         # Extrahiere Phase aus Content oder Labels
         phase = extract_phase(number)
