@@ -111,6 +111,60 @@ EOF
 - Bei komplexen Änderungen Breaking Changes erwähnen
 - Referenzen zu Issues/Tickets wenn vorhanden
 
+## Code-Dokumentation
+
+### XML-Kommentare
+
+- **ALLE** XML-Kommentare (summary, remarks, param, returns, etc.) MÜSSEN in **Englisch** verfasst werden
+- Dies gilt für alle .cs-Dateien im Projekt
+- Deutsche Kommentare sind nur in regulären Code-Kommentaren (`//`) erlaubt, wenn unbedingt nötig
+
+#### Beispiel
+
+```csharp
+/// <summary>
+/// Represents an ISO 20022 message identifier.
+/// </summary>
+/// <remarks>
+/// The identifier follows the pattern: [business area].[message].[variant].[version]
+/// </remarks>
+public readonly record struct MessageIdentifier
+{
+    // Korrekt: XML-Kommentare auf Englisch
+}
+```
+
+## Dateistruktur
+
+### Eine Klasse pro Datei
+
+- **JEDE** Datei darf nur **EINE** Klasse/Record/Struct/Interface/Enum enthalten
+- Der Dateiname MUSS dem Typ-Namen entsprechen
+- Beispiel: `MessageIdentifier.cs` enthält nur `MessageIdentifier`
+
+## Naming Conventions
+
+### CancellationToken Parameter
+
+- **ALLE** Parameter vom Typ `CancellationToken` MÜSSEN `cancellationToken` heißen
+- Nicht `ct`, `token`, oder andere Abkürzungen verwenden
+
+#### Beispiel
+
+```csharp
+// ✅ Korrekt
+public async Task ProcessAsync(CancellationToken cancellationToken = default)
+{
+    // ...
+}
+
+// ❌ Falsch
+public async Task ProcessAsync(CancellationToken ct = default)
+{
+    // ...
+}
+```
+
 ## Projekt-Konventionen
 
 Siehe [CONTRIBUTING.md](../CONTRIBUTING.md) für detaillierte Projekt-Konventionen.
