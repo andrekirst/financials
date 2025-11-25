@@ -5,91 +5,132 @@ namespace Camtify.Domain.Common;
 /// </summary>
 /// <remarks>
 /// Represents a physical postal address as used in ISO 20022 messages.
-/// Supports both structured and unstructured address formats.
+/// Supports both structured and unstructured address formats:
+/// 1. Structured: Individual fields (StreetName, BuildingNumber, etc.)
+/// 2. Unstructured: AddressLine array (max 7 lines of 70 characters each)
+/// Both formats can be combined.
 /// </remarks>
 public sealed record PostalAddress
 {
     /// <summary>
-    /// Address type (e.g., residential, business) (XML: AdrTp).
+    /// Gets the address type (XML: AdrTp).
     /// </summary>
-    public string? AddressType { get; init; }
+    public AddressType? AddressType { get; init; }
 
     /// <summary>
-    /// Department name (XML: Dept).
+    /// Gets the department name (XML: Dept).
     /// </summary>
+    /// <remarks>
+    /// Maximum 70 characters.
+    /// </remarks>
     public string? Department { get; init; }
 
     /// <summary>
-    /// Sub-department name (XML: SubDept).
+    /// Gets the sub-department name (XML: SubDept).
     /// </summary>
+    /// <remarks>
+    /// Maximum 70 characters.
+    /// </remarks>
     public string? SubDepartment { get; init; }
 
     /// <summary>
-    /// Street name (XML: StrtNm).
+    /// Gets the street name (XML: StrtNm).
     /// </summary>
+    /// <remarks>
+    /// Maximum 70 characters.
+    /// </remarks>
     public string? StreetName { get; init; }
 
     /// <summary>
-    /// Building number (XML: BldgNb).
+    /// Gets the building number (XML: BldgNb).
     /// </summary>
+    /// <remarks>
+    /// Maximum 16 characters.
+    /// </remarks>
     public string? BuildingNumber { get; init; }
 
     /// <summary>
-    /// Building name (XML: BldgNm).
+    /// Gets the building name (XML: BldgNm).
     /// </summary>
+    /// <remarks>
+    /// Maximum 35 characters.
+    /// </remarks>
     public string? BuildingName { get; init; }
 
     /// <summary>
-    /// Floor number (XML: Flr).
+    /// Gets the floor number (XML: Flr).
     /// </summary>
+    /// <remarks>
+    /// Maximum 70 characters.
+    /// </remarks>
     public string? Floor { get; init; }
 
     /// <summary>
-    /// Post box number (XML: PstBx).
+    /// Gets the post box number (XML: PstBx).
     /// </summary>
+    /// <remarks>
+    /// Maximum 16 characters.
+    /// </remarks>
     public string? PostBox { get; init; }
 
     /// <summary>
-    /// Room number (XML: Room).
+    /// Gets the room number (XML: Room).
     /// </summary>
+    /// <remarks>
+    /// Maximum 70 characters.
+    /// </remarks>
     public string? Room { get; init; }
 
     /// <summary>
-    /// Post code (XML: PstCd).
+    /// Gets the post code (XML: PstCd).
     /// </summary>
+    /// <remarks>
+    /// Maximum 16 characters.
+    /// </remarks>
     public string? PostCode { get; init; }
 
     /// <summary>
-    /// Town/city name (XML: TwnNm).
+    /// Gets the town/city name (XML: TwnNm).
     /// </summary>
+    /// <remarks>
+    /// Maximum 35 characters.
+    /// </remarks>
     public string? TownName { get; init; }
 
     /// <summary>
-    /// Town location name (XML: TwnLctnNm).
+    /// Gets the town location name (XML: TwnLctnNm).
     /// </summary>
+    /// <remarks>
+    /// Maximum 35 characters.
+    /// </remarks>
     public string? TownLocationName { get; init; }
 
     /// <summary>
-    /// District name (XML: DstrctNm).
+    /// Gets the district name (XML: DstrctNm).
     /// </summary>
+    /// <remarks>
+    /// Maximum 35 characters.
+    /// </remarks>
     public string? DistrictName { get; init; }
 
     /// <summary>
-    /// Country sub-division (state/province) (XML: CtrySubDvsn).
+    /// Gets the country sub-division such as state or province (XML: CtrySubDvsn).
     /// </summary>
+    /// <remarks>
+    /// Maximum 35 characters.
+    /// </remarks>
     public string? CountrySubDivision { get; init; }
 
     /// <summary>
-    /// Country code as ISO 3166-1 alpha-2 (XML: Ctry).
+    /// Gets the country code as ISO 3166-1 alpha-2 (XML: Ctry).
     /// </summary>
     /// <remarks>
-    /// Two-letter country code according to ISO 3166-1.
-    /// Examples: "DE" for Germany, "US" for United States, "GB" for United Kingdom.
+    /// Two-letter country code (e.g., "DE", "US", "GB").
     /// </remarks>
     public string? Country { get; init; }
 
     /// <summary>
-    /// Unstructured address lines (XML: AdrLine).
+    /// Gets the unstructured address lines (XML: AdrLine).
     /// </summary>
     /// <remarks>
     /// Used when the address cannot be structured into the specific fields above.
