@@ -165,6 +165,85 @@ public async Task ProcessAsync(CancellationToken ct = default)
 }
 ```
 
+## Projekt-Architektur
+
+### Trennung von technischem und fachlichem Code
+
+Code muss klar zwischen **technischen** (Infrastruktur) und **fachlichen** (Domain) Belangen getrennt werden:
+
+#### Camtify.Infrastructure
+Enthält **rein technische** Utilities und Cross-Cutting Concerns:
+- Generische Extension-Methods (z.B. `EnumExtensions.GetDescription<T>()`)
+- Reflection-basierte Hilfsmethoden
+- Technische Basisklassen und Interfaces
+- Serialization/Deserialization Helpers
+- Logging/Caching/Performance Utilities
+
+```csharp
+// ✅ Korrekt: Technisch/Generisch → Infrastructure
+namespace Camtify.Infrastructure.Extensions;
+
+public static class EnumExtensions
+{
+    public static string GetDescription<TEnum>(this TEnum value) where TEnum : struct, Enum
+    { ... }
+}
+```
+
+#### Camtify.Domain
+Enthält **fachliche/business-spezifische** Logik:
+- Domain-Models (Money, Iban, Bic, etc.)
+- ISO 20022-spezifische Parser und Konverter
+- Business-Validierungsregeln
+- Fachliche Enums und Konstanten
+
+```csharp
+// ✅ Korrekt: Fachlich/ISO 20022-spezifisch → Domain
+namespace Camtify.Domain.Common;
+
+public static class Iso20022EnumExtensions
+{
+    public static TransactionStatus? ParseTransactionStatus(string? code)
+    { ... }
+}
+```
+
+#### Entscheidungskriterien
+
+| Kriterium | → Infrastructure | → Domain |
+|-----------|------------------|----------|
+| Generisch verwendbar? | ✅ Ja | ❌ Nein |
+| ISO 20022-spezifisch? | ❌ Nein | ✅ Ja |
+| Verwendet Reflection/System-APIs? | ✅ Ja | ⚠️ Nur wenn fachlich nötig |
+| Kennt Domain-Typen? | ❌ Nein | ✅ Ja |
+| Wiederverwendbar in anderen Projekten? | ✅ Ja | ❌ Nein |
+
+#### Beispiel: EnumExtensions
+
+```csharp
+// ❌ FALSCH: Alles in einer Klasse
+public static class EnumExtensions
+{
+    public static string GetDescription<T>() { }        // Technisch
+    public static TransactionStatus? ParseStatus() { }  // Fachlich
+}
+
+// ✅ RICHTIG: Getrennt
+// In Camtify.Infrastructure:
+public static class EnumExtensions
+{
+    public static string GetDescription<T>() { }
+    public static T? ParseFromDescription<T>() { }
+}
+
+// In Camtify.Domain:
+public static class Iso20022EnumExtensions
+{
+    public static TransactionStatus? ParseTransactionStatus() { }
+    public static string ToIso20022Code<T>() { }
+}
+```
+
 ## Projekt-Konventionen
 
 Siehe [CONTRIBUTING.md](../CONTRIBUTING.md) für detaillierte Projekt-Konventionen.

@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Messages.Mt940.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Tests.Common", "Camtify.Tests.Common\Camtify.Tests.Common.csproj", "{BEDA8D62-0844-4B60-9F8E-660C82C11FB0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Infrastructure", "Camtify.Infrastructure\Camtify.Infrastructure.csproj", "{00295245-EA29-4D3F-979D-50896EAA921C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -116,6 +118,10 @@ Global
 		{BEDA8D62-0844-4B60-9F8E-660C82C11FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEDA8D62-0844-4B60-9F8E-660C82C11FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEDA8D62-0844-4B60-9F8E-660C82C11FB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00295245-EA29-4D3F-979D-50896EAA921C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00295245-EA29-4D3F-979D-50896EAA921C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00295245-EA29-4D3F-979D-50896EAA921C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00295245-EA29-4D3F-979D-50896EAA921C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A13DEB27-183B-40CA-A84C-F9119212D325} = {F1F1F1F1-1111-1111-1111-111111111111}

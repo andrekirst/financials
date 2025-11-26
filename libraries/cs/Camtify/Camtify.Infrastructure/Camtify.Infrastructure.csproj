@@ -1,9 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\Camtify.Core\Camtify.Core.csproj" />
-    <ProjectReference Include="..\Camtify.Infrastructure\Camtify.Infrastructure.csproj" />
-  </ItemGroup>
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>$(ProjectTargetFramework)</TargetFramework>
@@ -26,6 +21,7 @@
     <IsPackable>$(ProjectIsPackable)</IsPackable>
     <IncludeSymbols>$(ProjectIncludeSymbols)</IncludeSymbols>
     <SymbolPackageFormat>$(ProjectSymbolPackageFormat)</SymbolPackageFormat>
+    <Description>Infrastructure utilities for Camtify - technical helpers, extensions and cross-cutting concerns.</Description>
   </PropertyGroup>
 
 </Project>
