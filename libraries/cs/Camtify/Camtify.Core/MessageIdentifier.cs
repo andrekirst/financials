@@ -12,21 +12,34 @@ namespace Camtify.Core;
 /// - camt.053.001.08: Bank to Customer Statement
 /// - pacs.008.001.08: FI to FI Customer Credit Transfer
 /// </remarks>
-public readonly record struct MessageIdentifier : IComparable<MessageIdentifier>
+public readonly partial record struct MessageIdentifier : IComparable<MessageIdentifier>
 {
-    private static readonly Regex ParsePattern = new(
-        @"^([a-z]{4})\.(\d{3})\.(\d{3})\.(\d{2})$",
-        RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    /// <summary>
+    /// Pattern to parse message identifiers (e.g., "pain.001.001.09").
+    /// </summary>
+    [GeneratedRegex(@"^([a-z]{4})\.(\d{3})\.(\d{3})\.(\d{2})$", RegexOptions.IgnoreCase)]
+    private static partial Regex ParsePattern();
 
-    private static readonly Regex[] NamespacePatterns =
-    {
-        // Standard: urn:iso:std:iso:20022:tech:xsd:pain.001.001.09
-        new(@"urn:iso:std:iso:20022:tech:xsd:([a-z]{4}\.\d{3}\.\d{3}\.\d{2})", RegexOptions.Compiled | RegexOptions.IgnoreCase),
-        // Variante: urn:swift:xsd:pain.001.001.09
-        new(@"urn:swift:xsd:([a-z]{4}\.\d{3}\.\d{3}\.\d{2})", RegexOptions.Compiled | RegexOptions.IgnoreCase),
-        // CBPR+: urn:iso:std:iso:20022:tech:xsd:pain.001.001.09$cbpr_plus
-        new(@"urn:iso:std:iso:20022:tech:xsd:([a-z]{4}\.\d{3}\.\d{3}\.\d{2})\$", RegexOptions.Compiled | RegexOptions.IgnoreCase),
-    };
+    /// <summary>
+    /// Pattern to extract message identifier from ISO standard namespace.
+    /// </summary>
+    /// <example>urn:iso:std:iso:20022:tech:xsd:pain.001.001.09</example>
+    [GeneratedRegex(@"urn:iso:std:iso:20022:tech:xsd:([a-z]{4}\.\d{3}\.\d{3}\.\d{2})", RegexOptions.IgnoreCase)]
+    private static partial Regex IsoNamespacePattern();
+
+    /// <summary>
+    /// Pattern to extract message identifier from Swift namespace.
+    /// </summary>
+    /// <example>urn:swift:xsd:pain.001.001.09</example>
+    [GeneratedRegex(@"urn:swift:xsd:([a-z]{4}\.\d{3}\.\d{3}\.\d{2})", RegexOptions.IgnoreCase)]
+    private static partial Regex SwiftNamespacePattern();
+
+    /// <summary>
+    /// Pattern to extract message identifier from CBPR+ namespace.
+    /// </summary>
+    /// <example>urn:iso:std:iso:20022:tech:xsd:pain.001.001.09$cbpr_plus</example>
+    [GeneratedRegex(@"urn:iso:std:iso:20022:tech:xsd:([a-z]{4}\.\d{3}\.\d{3}\.\d{2})\$", RegexOptions.IgnoreCase)]
+    private static partial Regex CbprPlusNamespacePattern();
 
     /// <summary>
     /// Gets the full message identifier string (e.g., "pain.001.001.09").
@@ -139,7 +152,7 @@ public readonly record struct MessageIdentifier : IComparable<MessageIdentifier>
             return false;
         }
 
-        var match = ParsePattern.Match(value.Trim());
+        var match = ParsePattern().Match(value.Trim());
         if (!match.Success)
         {
             error = $"Invalid format: '{value}'. Expected format: 'xxxx.nnn.nnn.nn' (e.g., 'pain.001.001.09')";
@@ -189,7 +202,14 @@ public readonly record struct MessageIdentifier : IComparable<MessageIdentifier>
             return false;
         }
 
-        foreach (var pattern in NamespacePatterns)
+        ReadOnlySpan<Regex> namespacePatterns =
+        [
+            IsoNamespacePattern(),
+            SwiftNamespacePattern(),
+            CbprPlusNamespacePattern()
+        ];
+
+        foreach (var pattern in namespacePatterns)
         {
             var match = pattern.Match(@namespace);
             if (match.Success)
