@@ -1,10 +1,8 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-
-# Solution Folders
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F1F1F1F1-1111-1111-1111-111111111111}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{F2F2F2F2-2222-2222-2222-222222222222}"
@@ -13,22 +11,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business Areas", "Business 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F4F4F4F4-4444-4444-4444-444444444444}"
 EndProject
-
-# Core Projects
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Core", "Camtify.Core\Camtify.Core.csproj", "{A13DEB27-183B-40CA-A84C-F9119212D325}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Domain", "Camtify.Domain\Camtify.Domain.csproj", "{3B6A255B-DB72-4076-A551-795EE06E3015}"
 EndProject
-
-# Infrastructure Projects
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Parsing", "Camtify.Parsing\Camtify.Parsing.csproj", "{FAFBAC67-1CEF-4AC1-A6E2-B09F841E488E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Validation", "Camtify.Validation\Camtify.Validation.csproj", "{00E8E889-CE61-45DC-9FE8-FB7F45064C29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Generation", "Camtify.Generation\Camtify.Generation.csproj", "{A4DBA67D-B307-43E2-A4CA-E8B1B84F14AF}"
 EndProject
-
-# Business Area Projects
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Messages.Camt052", "Camtify.Messages.Camt052\Camtify.Messages.Camt052.csproj", "{B1B1B1B1-1111-1111-1111-111111111111}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Messages.Camt053", "Camtify.Messages.Camt053\Camtify.Messages.Camt053.csproj", "{03325FC2-9E62-44C5-8D46-71430CA88A79}"
@@ -37,8 +29,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Messages.Camt054", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Messages.Mt940", "Camtify.Messages.Mt940\Camtify.Messages.Mt940.csproj", "{095AB197-0BB8-4D69-92B6-4F40EF995E6E}"
 EndProject
-
-# Test Projects
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Core.Tests", "Camtify.Core.Tests\Camtify.Core.Tests.csproj", "{C1C1C1C1-1111-1111-1111-111111111111}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Domain.Tests", "Camtify.Domain.Tests\Camtify.Domain.Tests.csproj", "{C2C2C2C2-2222-2222-2222-222222222222}"
@@ -51,7 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Messages.Camt054.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Messages.Mt940.Tests", "Camtify.Messages.Mt940.Tests\Camtify.Messages.Mt940.Tests.csproj", "{C5C5C5C5-5555-5555-5555-555555555555}"
 EndProject
-
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Camtify.Tests.Common", "Camtify.Tests.Common\Camtify.Tests.Common.csproj", "{BEDA8D62-0844-4B60-9F8E-660C82C11FB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +112,10 @@ Global
 		{C5C5C5C5-5555-5555-5555-555555555555}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5C5C5C5-5555-5555-5555-555555555555}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5C5C5C5-5555-5555-5555-555555555555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEDA8D62-0844-4B60-9F8E-660C82C11FB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEDA8D62-0844-4B60-9F8E-660C82C11FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEDA8D62-0844-4B60-9F8E-660C82C11FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEDA8D62-0844-4B60-9F8E-660C82C11FB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A13DEB27-183B-40CA-A84C-F9119212D325} = {F1F1F1F1-1111-1111-1111-111111111111}
@@ -138,5 +133,6 @@ Global
 		{1FEBE4A3-E721-476F-89E0-278AB1958B1D} = {F4F4F4F4-4444-4444-4444-444444444444}
 		{C4C4C4C4-4444-4444-4444-444444444444} = {F4F4F4F4-4444-4444-4444-444444444444}
 		{C5C5C5C5-5555-5555-5555-555555555555} = {F4F4F4F4-4444-4444-4444-444444444444}
+		{BEDA8D62-0844-4B60-9F8E-660C82C11FB0} = {F4F4F4F4-4444-4444-4444-444444444444}
 	EndGlobalSection
 EndGlobal
