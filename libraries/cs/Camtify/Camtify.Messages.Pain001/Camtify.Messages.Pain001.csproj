@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(ProjectTargetFramework)</TargetFramework>
+    <LangVersion>$(ProjectLangVersion)</LangVersion>
+    <Nullable>$(ProjectNullable)</Nullable>
+    <ImplicitUsings>$(ProjectImplicitUsings)</ImplicitUsings>
+    <TreatWarningsAsErrors>$(ProjectTreatWarningsAsErrors)</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>$(ProjectGenerateDocumentationFile)</GenerateDocumentationFile>
+    <Authors>$(ProjectAuthors)</Authors>
+    <Company>$(ProjectCompany)</Company>
+    <Product>$(ProjectProduct)</Product>
+    <Copyright>$(ProjectCopyright)</Copyright>
+    <PackageProjectUrl>$(ProjectPackageProjectUrl)</PackageProjectUrl>
+    <RepositoryUrl>$(ProjectRepositoryUrl)</RepositoryUrl>
+    <RepositoryType>$(ProjectRepositoryType)</RepositoryType>
+    <PackageLicenseExpression>$(ProjectPackageLicenseExpression)</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>$(ProjectPackageRequireLicenseAcceptance)</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>$(ProjectIncludeSymbols)</IncludeSymbols>
+    <SymbolPackageFormat>$(ProjectSymbolPackageFormat)</SymbolPackageFormat>
+
+    <!-- Business Area specific -->
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
+    <IsPackable>true</IsPackable>
+    <PackageId>Camtify.Messages.Pain001</PackageId>
+    <RootNamespace>Camtify.Messages.Pain001</RootNamespace>
+    <AssemblyName>Camtify.Messages.Pain001</AssemblyName>
+    <Description>Camtify support for ISO 20022 pain.001 (Customer Credit Transfer Initiation) messages</Description>
+    <PackageTags>finance;banking;pain;iso20022;payments;pain001;credit-transfer;sepa</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Camtify.Core\Camtify.Core.csproj" />
+    <ProjectReference Include="..\Camtify.Domain\Camtify.Domain.csproj" />
+    <ProjectReference Include="..\Camtify.Parsing\Camtify.Parsing.csproj" />
+    <ProjectReference Include="..\Camtify.Validation\Camtify.Validation.csproj" />
+    <ProjectReference Include="..\Camtify.Generation\Camtify.Generation.csproj" />
+  </ItemGroup>
+
+</Project>
