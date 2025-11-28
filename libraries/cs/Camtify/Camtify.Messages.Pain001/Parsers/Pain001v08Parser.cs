@@ -1,5 +1,6 @@
 using System.Text;
 using Camtify.Messages.Pain001.Models.Pain001;
+using Camtify.Parsing;
 
 namespace Camtify.Messages.Pain001.Parsers;
 
@@ -10,7 +11,10 @@ namespace Camtify.Messages.Pain001.Parsers;
 /// Version 008 introduced instant payment support (TISS) and enhanced payment type information.
 /// </remarks>
 [Pain001Version("008", "urn:iso:std:iso:20022:tech:xsd:pain.001.001.08")]
-public sealed class Pain001v08Parser : Pain001ParserBase<Pain001v08Document>, IPain001Parser
+public sealed class Pain001v08Parser :
+    Pain001ParserBase<Pain001v08Document>,
+    IPain001Parser,
+    IStreamingParser<PaymentInformation>
 {
     private const string ExpectedNamespace = "urn:iso:std:iso:20022:tech:xsd:pain.001.001.08";
     private const string VersionIdentifier = "008";
@@ -25,16 +29,6 @@ public sealed class Pain001v08Parser : Pain001ParserBase<Pain001v08Document>, IP
         : base(xmlStream, leaveOpen, cacheGroupHeader)
     {
     }
-
-    /// <summary>
-    /// Gets the pain.001 version identifier (always "008" for this parser).
-    /// </summary>
-    public string Version => VersionIdentifier;
-
-    /// <summary>
-    /// Gets the XML namespace URI for pain.001.001.08.
-    /// </summary>
-    public string Namespace => ExpectedNamespace;
 
     /// <summary>
     /// Gets the expected namespace for this parser version.
@@ -105,5 +99,22 @@ public sealed class Pain001v08Parser : Pain001ParserBase<Pain001v08Document>, IP
 
         var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, useAsync: true);
         return new Pain001v08Parser(stream, leaveOpen: false);
+    }
+
+    /// <summary>
+    /// Streams payment information entries from the XML document.
+    /// </summary>
+    /// <param name="stream">The stream containing the XML message (unused - uses internal stream).</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>An async enumerable of payment information entries.</returns>
+    /// <remarks>
+    /// Explicit implementation of IStreamingParser interface.
+    /// The stream parameter is ignored as the parser uses its internal stream.
+    /// </remarks>
+    IAsyncEnumerable<PaymentInformation> IStreamingParser<PaymentInformation>.StreamEntriesAsync(
+        Stream stream,
+        CancellationToken cancellationToken)
+    {
+        return GetPaymentInformationEntriesAsync(cancellationToken);
     }
 }

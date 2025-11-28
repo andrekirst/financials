@@ -1,5 +1,8 @@
 using System.Reflection;
 using System.Xml;
+using Camtify.Core;
+using Camtify.Messages.Pain001.Models.Pain001;
+using Camtify.Parsing;
 
 namespace Camtify.Messages.Pain001.Parsers;
 
@@ -11,10 +14,14 @@ namespace Camtify.Messages.Pain001.Parsers;
 /// instantiates the appropriate parser based on XML namespace detection.
 /// New parser versions are automatically registered when decorated with Pain001VersionAttribute.
 /// </remarks>
-public static class Pain001ParserFactory
+public sealed class Pain001ParserFactory : IParserFactory
 {
+    // Static dictionaries for backward compatibility
     private static readonly Dictionary<string, ParserMetadata> ParsersByNamespace;
     private static readonly Dictionary<string, ParserMetadata> ParsersByVersion;
+
+    // Instance-level dictionary for MessageIdentifier-based lookup
+    private readonly Lazy<Dictionary<MessageIdentifier, ParserMetadata>> _parsersByMessageId;
 
     /// <summary>
     /// Static constructor that discovers all pain.001 parsers via reflection.
@@ -26,6 +33,218 @@ public static class Pain001ParserFactory
 
         DiscoverParsers();
     }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Pain001ParserFactory"/> class.
+    /// </summary>
+    public Pain001ParserFactory()
+    {
+        _parsersByMessageId = new Lazy<Dictionary<MessageIdentifier, ParserMetadata>>(
+            BuildMessageIdDictionary,
+            LazyThreadSafetyMode.ExecutionAndPublication);
+    }
+
+    /// <summary>
+    /// Builds the MessageIdentifier-based dictionary from static parsers.
+    /// </summary>
+    private static Dictionary<MessageIdentifier, ParserMetadata> BuildMessageIdDictionary()
+    {
+        var dictionary = new Dictionary<MessageIdentifier, ParserMetadata>();
+
+        foreach (var (ns, metadata) in ParsersByNamespace)
+        {
+            var messageId = MessageIdentifier.FromNamespace(ns);
+            dictionary[messageId] = metadata;
+        }
+
+        return dictionary;
+    }
+
+    #region IParserFactory Implementation
+
+    /// <summary>
+    /// Creates a typed parser for a specific message type.
+    /// </summary>
+    /// <remarks>
+    /// Pain.001 parsers require a stream at construction time.
+    /// Use <see cref="DetectAndCreateParserAsync{TDocument}"/> instead.
+    /// </remarks>
+    /// <exception cref="NotSupportedException">
+    /// Always thrown because Pain.001 parsers require a stream at construction.
+    /// </exception>
+    public IIso20022Parser<TDocument> CreateParser<TDocument>(MessageIdentifier messageId)
+        where TDocument : class
+    {
+        throw new NotSupportedException(
+            "Pain.001 parsers require a stream at construction time. " +
+            "Use DetectAndCreateParserAsync() or the static CreateAsync()/CreateForVersion() methods instead.");
+    }
+
+    /// <summary>
+    /// Creates a streaming parser for entry-level streaming.
+    /// </summary>
+    /// <remarks>
+    /// Pain.001 parsers require a stream at construction time.
+    /// Use <see cref="DetectAndCreateParserAsync"/> instead.
+    /// </remarks>
+    /// <exception cref="NotSupportedException">
+    /// Always thrown because Pain.001 parsers require a stream at construction.
+    /// </exception>
+    public IStreamingParser<TEntry> CreateStreamingParser<TEntry>(MessageIdentifier messageId)
+    {
+        throw new NotSupportedException(
+            "Pain.001 parsers require a stream at construction time. " +
+            "Use DetectAndCreateParserAsync() or the static CreateAsync()/CreateForVersion() methods instead.");
+    }
+
+    /// <summary>
+    /// Creates an untyped parser (for dynamic scenarios).
+    /// </summary>
+    /// <remarks>
+    /// Pain.001 parsers require a stream at construction time.
+    /// Use <see cref="DetectAndCreateParserAsync"/> instead.
+    /// </remarks>
+    /// <exception cref="NotSupportedException">
+    /// Always thrown because Pain.001 parsers require a stream at construction.
+    /// </exception>
+    public object CreateParser(MessageIdentifier messageId)
+    {
+        throw new NotSupportedException(
+            "Pain.001 parsers require a stream at construction time. " +
+            "Use DetectAndCreateParserAsync() or the static CreateAsync()/CreateForVersion() methods instead.");
+    }
+
+    /// <summary>
+    /// Checks whether a parser is available for the message type.
+    /// </summary>
+    /// <param name="messageId">The message identifier.</param>
+    /// <returns>True if supported.</returns>
+    public bool SupportsMessage(MessageIdentifier messageId)
+    {
+        return _parsersByMessageId.Value.ContainsKey(messageId);
+    }
+
+    /// <summary>
+    /// Checks whether a parser is available for the business area.
+    /// </summary>
+    /// <param name="businessArea">The business area (pain, camt, pacs, etc.).</param>
+    /// <returns>True if at least one version is supported.</returns>
+    public bool SupportsBusinessArea(string businessArea)
+    {
+        return _parsersByMessageId.Value.Keys
+            .Any(msgId => msgId.BusinessArea.Equals(businessArea, StringComparison.OrdinalIgnoreCase));
+    }
+
+    /// <summary>
+    /// Gets all supported message identifiers.
+    /// </summary>
+    public IReadOnlyCollection<MessageIdentifier> SupportedMessages =>
+        _parsersByMessageId.Value.Keys.ToList().AsReadOnly();
+
+    /// <summary>
+    /// Gets all supported versions for a message type.
+    /// </summary>
+    /// <param name="businessArea">Business area (e.g., "pain").</param>
+    /// <param name="messageType">Message type (e.g., "001").</param>
+    /// <returns>List of supported versions.</returns>
+    public IReadOnlyCollection<MessageIdentifier> GetSupportedVersions(
+        string businessArea,
+        string messageType)
+    {
+        return _parsersByMessageId.Value.Keys
+            .Where(msgId =>
+                msgId.BusinessArea.Equals(businessArea, StringComparison.OrdinalIgnoreCase) &&
+                msgId.MessageNumber.Equals(messageType, StringComparison.OrdinalIgnoreCase))
+            .ToList()
+            .AsReadOnly();
+    }
+
+    /// <summary>
+    /// Detects the message type from a stream and creates the appropriate parser.
+    /// </summary>
+    /// <param name="stream">The XML stream (position will be reset).</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Tuple of parser and detected message identifier.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if stream is null.</exception>
+    /// <exception cref="ArgumentException">Thrown if the stream is not readable or seekable.</exception>
+    /// <exception cref="MessageDetectionException">
+    /// Thrown when the message type cannot be detected.
+    /// </exception>
+    /// <exception cref="ParserNotFoundException">
+    /// Thrown when no parser is registered for the detected message type.
+    /// </exception>
+    public async Task<(object Parser, MessageIdentifier MessageId)> DetectAndCreateParserAsync(
+        Stream stream,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(stream);
+
+        if (!stream.CanRead)
+        {
+            throw new ArgumentException("Stream must be readable.", nameof(stream));
+        }
+
+        if (!stream.CanSeek)
+        {
+            throw new ArgumentException("Stream must be seekable for automatic version detection.", nameof(stream));
+        }
+
+        try
+        {
+            var detectedNamespace = await DetectNamespaceAsync(stream, cancellationToken);
+
+            if (!ParsersByNamespace.TryGetValue(detectedNamespace, out var metadata))
+            {
+                var messageId = MessageIdentifier.FromNamespace(detectedNamespace);
+                throw new ParserNotFoundException(messageId, SupportedMessages);
+            }
+
+            var parser = CreateParserInstance(metadata.ParserType, stream, leaveOpen: false, cacheGroupHeader: true);
+            var messageIdResult = MessageIdentifier.FromNamespace(detectedNamespace);
+
+            return (parser, messageIdResult);
+        }
+        catch (ArgumentException ex)
+        {
+            throw new MessageDetectionException("Failed to detect message type from stream.", ex);
+        }
+    }
+
+    /// <summary>
+    /// Detects the message type and creates a typed parser.
+    /// </summary>
+    /// <typeparam name="TDocument">The expected document type.</typeparam>
+    /// <param name="stream">The XML stream (position will be reset).</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Tuple of parser and detected message identifier.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if stream is null.</exception>
+    /// <exception cref="ArgumentException">Thrown if the stream is not readable or seekable.</exception>
+    /// <exception cref="MessageDetectionException">
+    /// Thrown when the message type cannot be detected.
+    /// </exception>
+    /// <exception cref="ParserNotFoundException">
+    /// Thrown when no parser is registered for the detected message type.
+    /// </exception>
+    /// <exception cref="ParserTypeMismatchException">
+    /// Thrown when the registered parser does not produce the expected document type.
+    /// </exception>
+    public async Task<(IIso20022Parser<TDocument> Parser, MessageIdentifier MessageId)>
+        DetectAndCreateParserAsync<TDocument>(
+            Stream stream,
+            CancellationToken cancellationToken = default)
+        where TDocument : class
+    {
+        var (parser, messageId) = await DetectAndCreateParserAsync(stream, cancellationToken);
+
+        if (parser is not IIso20022Parser<TDocument> typedParser)
+        {
+            throw new ParserTypeMismatchException(typeof(TDocument), parser.GetType());
+        }
+
+        return (typedParser, messageId);
+    }
+
+    #endregion
 
     /// <summary>
     /// Discovers all types implementing IPain001Parser with Pain001VersionAttribute.

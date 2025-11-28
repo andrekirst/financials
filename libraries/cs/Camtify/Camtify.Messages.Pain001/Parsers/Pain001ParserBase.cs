@@ -5,6 +5,7 @@ using Camtify.Core;
 using Camtify.Domain.Common;
 using Camtify.Messages.Pain001.Models.Pain001;
 using Camtify.Messages.Pain001.Parsers.Internal;
+using Camtify.Parsing;
 
 namespace Camtify.Messages.Pain001.Parsers;
 
@@ -32,6 +33,7 @@ public abstract class Pain001ParserBase<TDocument> : IStreamable<PaymentInformat
     private readonly bool _cacheGroupHeader;
     private GroupHeader? _cachedGroupHeader;
     private string? _cachedNamespace;
+    private MessageIdentifier? _messageIdentifier;
 
     // Lazy-initialized specialized parsers for reduced coupling
     private readonly Lazy<PartyParser> _partyParser = new(() => new PartyParser());
@@ -63,6 +65,42 @@ public abstract class Pain001ParserBase<TDocument> : IStreamable<PaymentInformat
     /// Gets the cached GroupHeader if available.
     /// </summary>
     public GroupHeader? CachedGroupHeader => _cachedGroupHeader;
+
+    /// <summary>
+    /// Gets the message identifier for this parser.
+    /// </summary>
+    /// <remarks>
+    /// The identifier is lazily constructed from the XML namespace on first access.
+    /// </remarks>
+    public MessageIdentifier MessageIdentifier
+    {
+        get
+        {
+            if (_messageIdentifier == null)
+            {
+                var ns = GetExpectedNamespace();
+                _messageIdentifier = MessageIdentifier.FromNamespace(ns);
+            }
+
+            return _messageIdentifier.Value;
+        }
+    }
+
+    /// <summary>
+    /// Gets the version identifier with leading zeros (e.g., "003", "009", "011").
+    /// </summary>
+    /// <remarks>
+    /// Delegates to the abstract GetVersion() method implemented by derived classes.
+    /// </remarks>
+    public string Version => GetVersion();
+
+    /// <summary>
+    /// Gets the XML namespace URI for this parser version.
+    /// </summary>
+    /// <remarks>
+    /// Delegates to the abstract GetExpectedNamespace() method implemented by derived classes.
+    /// </remarks>
+    public string Namespace => GetExpectedNamespace();
 
     /// <summary>
     /// Gets the expected XML namespace URI for this parser version.
@@ -1029,4 +1067,79 @@ public abstract class Pain001ParserBase<TDocument> : IStreamable<PaymentInformat
     /// </summary>
     private async Task<CodeOrProprietary?> ParseCodeOrProprietaryAsync(XmlReader reader, string ns, CancellationToken cancellationToken)
         => await _remittanceParser.Value.ParseCodeOrProprietaryAsync(reader, ns, cancellationToken);
+
+    /// <summary>
+    /// Validates whether the parser can handle the given stream.
+    /// </summary>
+    /// <param name="stream">The stream to validate. Position will be reset after validation.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>True if the parser can handle this stream; otherwise false.</returns>
+    /// <remarks>
+    /// This method reads only the Document element's namespace attribute and then resets
+    /// the stream position to the original location. It requires a seekable stream.
+    /// </remarks>
+    public async Task<bool> CanParseAsync(Stream stream, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(stream);
+
+        if (!stream.CanSeek)
+        {
+            return false;
+        }
+
+        var originalPosition = stream.Position;
+
+        try
+        {
+            stream.Position = 0;
+
+            var settings = new XmlReaderSettings
+            {
+                Async = true,
+                IgnoreWhitespace = true,
+                CloseInput = false,
+                DtdProcessing = DtdProcessing.Prohibit
+            };
+
+            using var reader = XmlReader.Create(stream, settings);
+
+            while (await reader.ReadAsync())
+            {
+                if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "Document")
+                {
+                    return reader.NamespaceURI == GetExpectedNamespace();
+                }
+            }
+
+            return false;
+        }
+        catch
+        {
+            return false;
+        }
+        finally
+        {
+            if (stream.CanSeek)
+            {
+                stream.Position = originalPosition;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Parses an ISO 20022 message from a stream.
+    /// </summary>
+    /// <param name="stream">The stream containing the XML message.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The parsed document.</returns>
+    /// <remarks>
+    /// This method implements the generic IIso20022Parser interface and delegates
+    /// to the existing ParseDocumentAsync method.
+    /// </remarks>
+    public async Task<IIso20022Document<CustomerCreditTransferInitiation>> ParseAsync(
+        Stream stream,
+        CancellationToken cancellationToken = default)
+    {
+        return await ParseDocumentAsync(cancellationToken);
+    }
 }

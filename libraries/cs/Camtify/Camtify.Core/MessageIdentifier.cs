@@ -67,6 +67,12 @@ public readonly partial record struct MessageIdentifier : IComparable<MessageIde
     public string Version { get; }
 
     /// <summary>
+    /// Gets the version string with leading zeros (e.g., "03" → "003", "09" → "009").
+    /// Used for ISO 20022 conformance where three-digit versions are standard.
+    /// </summary>
+    public string VersionPadded => Version.PadLeft(3, '0');
+
+    /// <summary>
     /// Gets the version as an integer.
     /// </summary>
     public int VersionNumber => int.Parse(Version);

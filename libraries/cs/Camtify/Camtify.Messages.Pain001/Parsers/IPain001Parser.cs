@@ -1,3 +1,7 @@
+using Camtify.Core;
+using Camtify.Messages.Pain001.Models.Pain001;
+using Camtify.Parsing;
+
 namespace Camtify.Messages.Pain001.Parsers;
 
 /// <summary>
@@ -6,16 +10,9 @@ namespace Camtify.Messages.Pain001.Parsers;
 /// <remarks>
 /// This interface provides version-independent access to pain.001 parsers.
 /// Use Pain001ParserFactory.CreateAsync() for automatic version detection.
+/// Extends the generic IIso20022Parser interface for integration with the central parser factory.
+/// Version and Namespace properties are inherited from IIso20022Parser.
 /// </remarks>
-public interface IPain001Parser
+public interface IPain001Parser : IIso20022Parser<IIso20022Document<CustomerCreditTransferInitiation>>
 {
-    /// <summary>
-    /// Gets the pain.001 version identifier (e.g., "003", "009", "011").
-    /// </summary>
-    string Version { get; }
-
-    /// <summary>
-    /// Gets the XML namespace URI for this parser version.
-    /// </summary>
-    string Namespace { get; }
 }
