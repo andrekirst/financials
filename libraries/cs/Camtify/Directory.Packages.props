@@ -37,7 +37,7 @@
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
 
     <!-- SonarAnalyzer for C# -->
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.32.0.97167" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.16.0.128591" />
   </ItemGroup>
 
 </Project>
