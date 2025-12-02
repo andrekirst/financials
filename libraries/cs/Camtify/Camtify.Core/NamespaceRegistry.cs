@@ -32,15 +32,19 @@ public class NamespaceRegistry : INamespaceRegistry
     public MessageIdentifier? GetMessageIdentifier(string namespaceUri)
     {
         if (string.IsNullOrEmpty(namespaceUri))
+        {
             return null;
+        }
 
         // Direct lookup
         if (_namespaceToMessage.TryGetValue(namespaceUri, out var messageId))
+        {
+
             return messageId;
+        }
 
         // Try dynamic parsing
-        MessageIdentifier? parsedMessageId;
-        if (TryParseNamespace(namespaceUri, out parsedMessageId))
+        if (TryParseNamespace(namespaceUri, out MessageIdentifier? parsedMessageId))
         {
             // Cache for future lookups
             Register(namespaceUri, parsedMessageId!.Value);
@@ -61,14 +65,16 @@ public class NamespaceRegistry : INamespaceRegistry
     public IReadOnlyCollection<string> GetAllNamespaces(MessageIdentifier messageId)
     {
         if (_messageToNamespaces.TryGetValue(messageId, out var namespaces))
-            return namespaces.ToList();
+        {
+            return [.. namespaces];
+        }
 
         // Generate standard namespaces
-        return new[]
-        {
+        return
+        [
             $"{IsoPrefix}{messageId}",
             $"{SwiftPrefix}{messageId}"
-        };
+        ];
     }
 
     /// <inheritdoc/>
@@ -90,18 +96,18 @@ public class NamespaceRegistry : INamespaceRegistry
         _namespaceToMessage.TryAdd(namespaceUri, messageId);
         _messageToNamespaces.AddOrUpdate(
             messageId,
-            _ => new HashSet<string> { namespaceUri },
+            _ => [namespaceUri],
             (_, set) =>
             {
                 lock (set)
                 {
                     set.Add(namespaceUri);
                 }
+
                 return set;
             });
 
-        _logger?.LogDebug("Namespace registered: {Namespace} -> {MessageId}",
-            namespaceUri, messageId);
+        _logger?.LogDebug("Namespace registered: {Namespace} -> {MessageId}", namespaceUri, messageId);
     }
 
     /// <inheritdoc/>
