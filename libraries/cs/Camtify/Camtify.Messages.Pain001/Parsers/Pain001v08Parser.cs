@@ -1,4 +1,5 @@
 using System.Text;
+using Camtify.Core;
 using Camtify.Messages.Pain001.Models.Pain001;
 using Camtify.Parsing;
 
@@ -101,20 +102,42 @@ public sealed class Pain001v08Parser :
         return new Pain001v08Parser(stream, leaveOpen: false);
     }
 
-    /// <summary>
-    /// Streams payment information entries from the XML document.
-    /// </summary>
-    /// <param name="stream">The stream containing the XML message (unused - uses internal stream).</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>An async enumerable of payment information entries.</returns>
+    /// <inheritdoc />
+    IReadOnlyCollection<MessageIdentifier> IStreamingParser<PaymentInformation>.SupportedMessages => new[]
+    {
+        new MessageIdentifier("pain.001.001.08")
+    };
+
+    /// <inheritdoc />
     /// <remarks>
-    /// Explicit implementation of IStreamingParser interface.
-    /// The stream parameter is ignored as the parser uses its internal stream.
+    /// The stream parameter is ignored as the parser uses its internal stream from the constructor.
+    /// The options parameter is ignored for this implementation.
     /// </remarks>
-    IAsyncEnumerable<PaymentInformation> IStreamingParser<PaymentInformation>.StreamEntriesAsync(
+    IAsyncEnumerable<PaymentInformation> IStreamingParser<PaymentInformation>.ParseEntriesAsync(
         Stream stream,
+        ParseOptions? options,
         CancellationToken cancellationToken)
     {
         return GetPaymentInformationEntriesAsync(cancellationToken);
+    }
+
+    /// <inheritdoc />
+    /// <remarks>
+    /// The stream parameter is ignored as the parser uses its internal stream from the constructor.
+    /// This implementation does not parse headers separately, so Header will be null.
+    /// </remarks>
+    async Task<StreamingParseResult<PaymentInformation>> IStreamingParser<PaymentInformation>.ParseWithContextAsync(
+        Stream stream,
+        ParseOptions? options,
+        CancellationToken cancellationToken)
+    {
+        return new StreamingParseResult<PaymentInformation>
+        {
+            MessageId = new MessageIdentifier("pain.001.001.08"),
+            Header = null,
+            ApplicationHeader = null,
+            ExpectedEntryCount = null,
+            Entries = GetPaymentInformationEntriesAsync(cancellationToken)
+        };
     }
 }

@@ -192,7 +192,7 @@ public class Pain001ParserInterfaceImplementationTests
 
         // Act
         var entries = new List<PaymentInformation>();
-        await foreach (var entry in parser.StreamEntriesAsync(stream))
+        await foreach (var entry in parser.ParseEntriesAsync(stream))
         {
             entries.Add(entry);
         }

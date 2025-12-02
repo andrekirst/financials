@@ -91,6 +91,7 @@ public sealed class Pain001ParserFactory : IParserFactory
     /// Always thrown because Pain.001 parsers require a stream at construction.
     /// </exception>
     public IStreamingParser<TEntry> CreateStreamingParser<TEntry>(MessageIdentifier messageId)
+        where TEntry : class
     {
         throw new NotSupportedException(
             "Pain.001 parsers require a stream at construction time. " +
