@@ -10,6 +10,16 @@ namespace Camtify.Parsing;
 public class MessageDetectionException : Iso20022Exception
 {
     /// <summary>
+    /// Gets the namespace that was found (if any).
+    /// </summary>
+    public string? FoundNamespace { get; }
+
+    /// <summary>
+    /// Gets the root element that was found (if any).
+    /// </summary>
+    public string? FoundRootElement { get; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="MessageDetectionException"/> class.
     /// </summary>
     public MessageDetectionException()
@@ -32,5 +42,19 @@ public class MessageDetectionException : Iso20022Exception
     /// <param name="innerException">The exception that is the cause of the current exception.</param>
     public MessageDetectionException(string message, Exception innerException) : base(message, innerException)
     {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MessageDetectionException"/> class with detailed information
+    /// about what was found during detection.
+    /// </summary>
+    /// <param name="message">The message that describes the error.</param>
+    /// <param name="foundNamespace">The namespace that was found (if any).</param>
+    /// <param name="foundRootElement">The root element that was found (if any).</param>
+    public MessageDetectionException(string message, string? foundNamespace, string? foundRootElement)
+        : base(message)
+    {
+        FoundNamespace = foundNamespace;
+        FoundRootElement = foundRootElement;
     }
 }
