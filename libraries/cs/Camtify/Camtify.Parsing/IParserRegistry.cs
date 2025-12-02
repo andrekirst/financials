@@ -45,7 +45,8 @@ public interface IParserRegistry
     /// <param name="parserFactory">Factory function to create the streaming parser.</param>
     void RegisterStreaming<TEntry>(
         MessageIdentifier messageId,
-        Func<IStreamingParser<TEntry>> parserFactory);
+        Func<IStreamingParser<TEntry>> parserFactory)
+        where TEntry : class;
 
     /// <summary>
     /// Removes the registration for a message type.

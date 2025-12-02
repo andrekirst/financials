@@ -63,7 +63,8 @@ public interface IParserFactory
     /// <exception cref="ParserNotFoundException">
     /// Thrown when no streaming parser is registered for this message type.
     /// </exception>
-    IStreamingParser<TEntry> CreateStreamingParser<TEntry>(MessageIdentifier messageId);
+    IStreamingParser<TEntry> CreateStreamingParser<TEntry>(MessageIdentifier messageId)
+        where TEntry : class;
 
     /// <summary>
     /// Creates an untyped parser (for dynamic scenarios).

@@ -65,6 +65,7 @@ public class Iso20022ParserFactory : IParserFactory, IParserRegistry
 
     /// <inheritdoc/>
     public IStreamingParser<TEntry> CreateStreamingParser<TEntry>(MessageIdentifier messageId)
+        where TEntry : class
     {
         if (!_parsers.TryGetValue(messageId, out var registration))
         {
@@ -245,6 +246,7 @@ public class Iso20022ParserFactory : IParserFactory, IParserRegistry
     public void RegisterStreaming<TEntry>(
         MessageIdentifier messageId,
         Func<IStreamingParser<TEntry>> parserFactory)
+        where TEntry : class
     {
         ArgumentNullException.ThrowIfNull(parserFactory);
 

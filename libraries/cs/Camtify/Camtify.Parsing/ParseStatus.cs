@@ -21,6 +21,11 @@ public enum ParseStatus
     ParsingBody,
 
     /// <summary>
+    /// Parsing entries (for streaming parsers).
+    /// </summary>
+    ParsingEntries,
+
+    /// <summary>
     /// Parsing completed successfully.
     /// </summary>
     Completed,

@@ -32,4 +32,9 @@ public sealed record ParseProgress
     /// Gets an optional message describing the current operation.
     /// </summary>
     public string? Message { get; init; }
+
+    /// <summary>
+    /// Gets the number of entries parsed so far (for streaming parsers).
+    /// </summary>
+    public int? EntriesParsed { get; init; }
 }

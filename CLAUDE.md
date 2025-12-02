@@ -1,0 +1,1 @@
+- Do not use XElement or other classes in the namespace System.Xml.Linq

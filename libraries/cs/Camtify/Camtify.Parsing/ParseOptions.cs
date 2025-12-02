@@ -44,4 +44,12 @@ public sealed record ParseOptions
     /// Gets a value indicating whether to preserve whitespace.
     /// </summary>
     public bool PreserveWhitespace { get; init; }
+
+    /// <summary>
+    /// Gets the maximum number of entries to parse (0 = unlimited).
+    /// </summary>
+    /// <remarks>
+    /// Useful for testing or previewing large files without processing everything.
+    /// </remarks>
+    public int MaxEntries { get; init; }
 }
