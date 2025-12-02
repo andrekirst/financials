@@ -120,17 +120,36 @@ public sealed partial class Iso20022MessageDetector : IMessageDetector
         }
         else if (rootElementName == "Document")
         {
-            // Standalone Document
+            // Standalone Document (may contain AppHdr)
             documentNamespace = rootNamespace;
             variant = DetermineVariant(rootNamespace);
 
-            // Find message element name
+            // Find message element name (check for AppHdr first)
             while (await reader.ReadAsync())
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
                 if (reader.NodeType == XmlNodeType.Element)
                 {
+                    if (reader.LocalName == "AppHdr")
+                    {
+                        // Found AppHdr inside Document
+                        hasAppHeader = true;
+                        variant = MessageVariant.WithApplicationHeader;
+
+                        var appHdrNs = reader.NamespaceURI;
+                        if (MessageIdentifier.TryFromNamespace(appHdrNs, out var appMsgId, out _))
+                        {
+                            appHeaderMessageId = appMsgId;
+                        }
+
+                        // Search for MsgDefIdr
+                        msgDefIdr = await FindMsgDefIdrAsync(reader, cancellationToken);
+
+                        // Continue to find message element
+                        continue;
+                    }
+
                     messageElementName = reader.LocalName;
                     break;
                 }
