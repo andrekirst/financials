@@ -6,7 +6,7 @@
 
   <ItemGroup Label="Testing Packages">
     <!-- Code Coverage -->
-    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="coverlet.collector" Version="8.0.0" />
 
     <!-- Test Framework -->
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
